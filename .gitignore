@@ -44,5 +44,7 @@ tuhuebot.json
 
 vanban
 vanban/*
-bin/*
-web-frontend-demo
+
+
+certificate.pem
+privatekey.pem

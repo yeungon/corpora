@@ -9,7 +9,7 @@ run: build
 build: 
 	@go build -o bin/corpora -buildvcs=false
 dev:
-	go run main.go
+	go run cmd/web/main.go
 start:
 	sudo systemctl start corpora
 enable:
