@@ -1,0 +1,10 @@
+[Unit]
+Description=Vietnamese Corpora Application
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+WorkingDirectory=/www/wwwroot/corpora.vietnameselanguage.org/corpora
+ExecStart=/www/wwwroot/corpora.vietnameselanguage.org/corpora/bin/corpora
+[Install]
+WantedBy=multi-user.target

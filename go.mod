@@ -1,3 +1,3 @@
-module github.com/philippta/web-frontend-demo
+module github.com/yeungon/corpora
 
 go 1.16

@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/philippta/web-frontend-demo/html"
+	"github.com/yeungon/corpora/html"
 )
 
 func main() {
