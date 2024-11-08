@@ -2,12 +2,17 @@
 SERVICE_FILE := corpora.service
 INSTALL_PATH := /etc/systemd/system/
 # Install the service file to /etc/systemd/system/
-install:
+clone:
+	sudo git clone "https://github.com/yeungon/corpora.git"
+copy:
 	sudo cp $(SERVICE_FILE) $(INSTALL_PATH)
+
+install: clone build copy build start enable status log
+
 run: build
 	@ ./bin/corpora
 build: 
-	@go build -o bin/corpora -buildvcs=false
+	@go build -o bin/corpora -buildvcs=false ./cmd/web
 dev:
 	go run cmd/web/main.go
 start:
