@@ -7,7 +7,7 @@ clone:
 copy:
 	sudo cp $(SERVICE_FILE) $(INSTALL_PATH)
 
-install: clone build copy build start enable status log
+install: clone build copy reload build start enable status log
 
 run: build
 	@ ./bin/corpora
@@ -15,6 +15,8 @@ build:
 	@go build -o bin/corpora -buildvcs=false ./cmd/web
 dev:
 	go run cmd/web/main.go
+reload: 
+	systemctl daemon-reload
 start:
 	sudo systemctl start corpora
 enable:

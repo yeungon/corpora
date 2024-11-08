@@ -21,8 +21,8 @@ func main() {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("welcome to Vietnamese Corpora"))
 	})
-	r.Get("/dashboard", web.Index)
-	r.Get("/profile/show", web.ProfileShow)
+	r.Get("/index", web.Index)
+	r.Get("/profile", web.ProfileShow)
 	r.Get("/profile/edit", web.ProfileEdit)
 	http.ListenAndServe(":9999", r)
 }
