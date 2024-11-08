@@ -12,11 +12,17 @@ dev:
 	go run main.go
 start:
 	sudo systemctl start corpora
+enable:
+	sudo systemctl enable corpora
 stop:
 	sudo systemctl stop corpora
 restart:
 	sudo systemctl restart corpora
 status:
+	sudo systemctl status corpora
+pull:
+	sudo git pull
+update: pull build restart status
 	sudo systemctl status corpora
 #Print out the log after running with systemd
 log:
