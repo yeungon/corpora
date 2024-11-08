@@ -2,8 +2,8 @@ package html
 
 import (
 	"embed"
-	"io"
 	"html/template"
+	"io"
 )
 
 //go:embed *
@@ -11,6 +11,7 @@ var files embed.FS
 
 var (
 	dashboard   = parse("dashboard.html")
+	index       = parse("index.html")
 	profileShow = parse("profile/show.html")
 	profileEdit = parse("profile/edit.html")
 )
@@ -25,6 +26,13 @@ func Dashboard(w io.Writer, p DashboardParams, partial string) error {
 		partial = "layout.html"
 	}
 	return dashboard.ExecuteTemplate(w, partial, p)
+}
+
+func Index(w io.Writer, p DashboardParams, partial string) error {
+	if partial == "" {
+		partial = "layout.html"
+	}
+	return index.ExecuteTemplate(w, partial, p)
 }
 
 type ProfileShowParams struct {

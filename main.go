@@ -3,40 +3,13 @@ package main
 import (
 	"net/http"
 
-	"github.com/yeungon/corpora/html"
+	web "github.com/yeungon/corpora/cmd"
 )
 
 func main() {
-	http.HandleFunc("/dashboard", dashboard)
-	http.HandleFunc("/profile/show", profileShow)
-	http.HandleFunc("/profile/edit", profileEdit)
+	http.HandleFunc("/", web.Index)
+	http.HandleFunc("/dashboard", web.Dashboard)
+	http.HandleFunc("/profile/show", web.ProfileShow)
+	http.HandleFunc("/profile/edit", web.ProfileEdit)
 	http.ListenAndServe(":9999", nil)
-}
-
-func dashboard(w http.ResponseWriter, r *http.Request) {
-	p := html.DashboardParams{
-		Title:   "Dashboard",
-		Message: "Hello from dashboard",
-	}
-	html.Dashboard(w, p, partial(r))
-}
-
-func profileShow(w http.ResponseWriter, r *http.Request) {
-	p := html.ProfileShowParams{
-		Title:   "Profile Show",
-		Message: "Hello from profile show",
-	}
-	html.ProfileShow(w, p, partial(r))
-}
-
-func profileEdit(w http.ResponseWriter, r *http.Request) {
-	p := html.ProfileEditParams{
-		Title:   "Profile Edit",
-		Message: "Hello from profile edit",
-	}
-	html.ProfileEdit(w, p, partial(r))
-}
-
-func partial(r *http.Request) string {
-	return r.URL.Query().Get("partial")
 }
