@@ -22,7 +22,7 @@ status:
 	sudo systemctl status corpora
 pull:
 	sudo git pull
-update: pull build restart status
+update: pull build restart status log
 	sudo systemctl status corpora
 #Print out the log after running with systemd
 log:
