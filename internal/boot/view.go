@@ -1,4 +1,4 @@
-package web
+package boot
 
 import (
 	"fmt"

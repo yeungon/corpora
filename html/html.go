@@ -1,12 +1,8 @@
 package html
 
 import (
-	"embed"
 	"io"
 )
-
-//go:embed *
-var files embed.FS
 
 var (
 	index       = parse("index.html")
