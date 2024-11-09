@@ -3,7 +3,7 @@ package boot
 import (
 	"net/http"
 
-	"github.com/yeungon/corpora/html"
+	html "github.com/yeungon/corpora/html"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
