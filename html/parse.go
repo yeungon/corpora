@@ -7,6 +7,7 @@ import (
 )
 
 // ref: https://philipptanlak.com/web-frontends-in-go/#implementing-the-template-renderers
+// future work: https://github.com/dstpierre/tpl/tree/main
 
 //go:embed *
 var files embed.FS

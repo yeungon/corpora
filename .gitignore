@@ -40,7 +40,7 @@ tuhuebot.db
 tuhuebot_kv.db
 
 # log file
-tuhuebot.json
+corpora.json
 
 vanban
 vanban/*
