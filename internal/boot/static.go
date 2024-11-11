@@ -13,22 +13,14 @@ import (
 )
 
 func LoadStatic(r *chi.Mux) {
-	// Log to ensure the function is being called
 	log.Println("Loading static files handler...")
-
 	workDir, _ := os.Getwd()
-	fmt.Println(workDir)
 	filesDir := http.Dir(filepath.Join(workDir, "static"))
-
 	fmt.Println("Static files are served from:", filepath.Join(workDir, "static"))
-
-	log.Printf("filesDir?: %s", filesDir)
-
 	FileServer(r, "/static", filesDir)
 }
 
 func FileServer(r *chi.Mux, path string, root http.FileSystem) {
-	log.Printf("Does it run this line?: %s", path)
 	// Ensure there are no URL parameters
 	if strings.ContainsAny(path, "{}*") {
 		panic("FileServer does not permit any URL parameters.")
@@ -65,5 +57,4 @@ func FileServer(r *chi.Mux, path string, root http.FileSystem) {
 }
 
 //https://github.com/go-chi/chi/blob/master/_examples/fileserver/main.go
-
 //Another (sound) comprehensive solution, for future reference: https://github.com/go-chi/chi/issues/155

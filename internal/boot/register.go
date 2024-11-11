@@ -6,6 +6,5 @@ import (
 
 func Register(r *chi.Mux) {
 	Router(r)
-	RegisterStatic(r)
-	//LoadStatic(r)
+	LoadStatic(r)
 }

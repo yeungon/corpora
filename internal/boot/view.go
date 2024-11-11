@@ -6,14 +6,6 @@ import (
 	html "github.com/yeungon/corpora/html"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
-	p := html.IndexParams{
-		Title:   "Vietnamese Corpora",
-		Message: "This is a new beginning! Hello from Index",
-	}
-	html.Index(w, p, Partial(r))
-}
-
 func ProfileShow(w http.ResponseWriter, r *http.Request) {
 	p := html.ProfileShowParams{
 		Title:   "Profile Show",

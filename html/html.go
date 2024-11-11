@@ -1,28 +1,31 @@
 package html
 
 import (
-	"io"
+	"embed"
+	"strings"
+	"text/template"
 )
 
 var (
-	index       = parse("template/index.html")
+	home        = parse("template/index.html")
+	navbar      = parse("template/nav.html")
 	profileShow = parse("template/profile/show.html")
 	profileEdit = parse("template/profile/edit.html")
 )
 
-type IndexParams struct {
-	Title   string
-	Message string
+// ref: https://philipptanlak.com/web-frontends-in-go/#implementing-the-template-renderers
+// future work: https://github.com/dstpierre/tpl/tree/main
+//
+//go:embed *
+var files embed.FS
+
+var funcs = template.FuncMap{
+	"uppercase": func(v string) string {
+		return strings.ToUpper(v)
+	},
 }
 
-func Index(w io.Writer, p IndexParams, partial string) error {
-	if partial == "" {
-		partial = "layout.html"
-	}
-	return index.ExecuteTemplate(w, partial, p)
-}
-
-type ProfileShowParams struct {
-	Title   string
-	Message string
+func parse(file string) *template.Template {
+	return template.Must(
+		template.New("layout.html").Funcs(funcs).ParseFS(files, "layout.html", file))
 }
