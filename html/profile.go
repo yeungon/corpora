@@ -2,6 +2,11 @@ package html
 
 import "io"
 
+type ProfileShowParams struct {
+	Title   string
+	Message string
+}
+
 func ProfileShow(w io.Writer, p ProfileShowParams, partial string) error {
 	if partial == "" {
 		partial = "layout.html"

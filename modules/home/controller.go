@@ -11,8 +11,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		Title:   "Vietnamese Corpora",
 		Message: "This is a new beginning! Hello from Index",
 	}
-	html.Home(w, p, Partial(r))
-	//html.Home(w, p, "partial")
+	//html.Home(w, p, Partial(r))
+	html.Home(w, p)
 }
 
 func Partial(r *http.Request) string {

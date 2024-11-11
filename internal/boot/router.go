@@ -9,5 +9,4 @@ func Router(r *chi.Mux) {
 	r.Get("/", home.Home)
 	r.Get("/profile", ProfileShow)
 	r.Get("/profile/edit", ProfileEdit)
-	r.Get("/profile/show", ProfileShow)
 }

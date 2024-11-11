@@ -7,17 +7,16 @@ import (
 )
 
 var (
-	home        = parse("template/index.html")
-	navbar      = parse("template/nav.html")
-	profileShow = parse("template/profile/show.html")
-	profileEdit = parse("template/profile/edit.html")
+	//home = parse("index.html")
+	home        = parseMultiple("index.html")
+	profileShow = parseMultiple("template/profile/show.html")
+	profileEdit = parseMultiple("template/profile/edit.html")
 )
 
-// ref: https://philipptanlak.com/web-frontends-in-go/#implementing-the-template-renderers
-// future work: https://github.com/dstpierre/tpl/tree/main
+// The configuration below is important, it is a derective.//
 //
-//go:embed *
-var files embed.FS
+//go:embed * template/* template/profile/* template/master/*
+var filesystem embed.FS
 
 var funcs = template.FuncMap{
 	"uppercase": func(v string) string {
@@ -27,5 +26,16 @@ var funcs = template.FuncMap{
 
 func parse(file string) *template.Template {
 	return template.Must(
-		template.New("layout.html").Funcs(funcs).ParseFS(files, "layout.html", file))
+		template.New("layout.html").Funcs(funcs).ParseFS(filesystem, "layout.html", file))
 }
+
+// Helper function to parse multiple template files, always including layout.html
+func parseMultiple(files ...string) *template.Template {
+	// Default template files loaded by default
+	allFiles := append([]string{"layout.html", "template/master/nav.html", "template/master/header.html", "template/master/footer.html"}, files...)
+	return template.Must(
+		template.New("layout.html").Funcs(funcs).ParseFS(filesystem, allFiles...))
+}
+
+// ref: https://philipptanlak.com/web-frontends-in-go/#implementing-the-template-renderers
+// future work: https://github.com/dstpierre/tpl/tree/main
