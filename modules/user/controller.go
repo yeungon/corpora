@@ -1,4 +1,4 @@
-package boot
+package user
 
 import (
 	"net/http"

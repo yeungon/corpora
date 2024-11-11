@@ -37,5 +37,6 @@ func parseMultiple(files ...string) *template.Template {
 		template.New("layout.html").Funcs(funcs).ParseFS(filesystem, allFiles...))
 }
 
+//NOTE: We might create many more version of parseMultiple for specific purposes. <----------
 // ref: https://philipptanlak.com/web-frontends-in-go/#implementing-the-template-renderers
 // future work: https://github.com/dstpierre/tpl/tree/main

@@ -2,12 +2,12 @@
 SERVICE_FILE := corpora.service
 INSTALL_PATH := /etc/systemd/system/
 # Install the service file to /etc/systemd/system/
-
 copy:
 	sudo cp $(SERVICE_FILE) $(INSTALL_PATH)
-
-install: copy reload build start enable status log
-
+create:
+	sudo mkdir -p bin
+	sudo chmod 7777 bin
+install: copy reload create build start enable status log
 run: build
 	@ ./bin/corpora
 build: 
@@ -29,7 +29,7 @@ status:
 pull:
 	sudo git pull
 update: pull build restart status log
-	
+
 #Print out the log after running with systemd
 log:
 	journalctl -u corpora -f
