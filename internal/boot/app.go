@@ -18,6 +18,7 @@ func App() {
 	r.Use(middleware.Logger)
 	r.Use(middleware.StripSlashes)
 	r.Use(middleware.Recoverer)
+	r.Use(securityHeaders)
 	r.Use(middleware.Timeout(60 * time.Second))
 	Register(r)
 	http.ListenAndServe(":9999", r)
