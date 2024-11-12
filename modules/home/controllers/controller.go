@@ -1,17 +1,20 @@
 package home
 
-import "github.com/yeungon/corpora/internal/config"
+import (
+	"github.com/yeungon/corpora/internal/config"
+	"github.com/yeungon/corpora/pkg/helper"
+)
 
 type Controller struct {
 	//articleService ArticleService.ArticleServiceInterface
 	config *config.AppConfig
-	//helper *helpers.Helper
+	helper *helper.Helper
 }
 
 func New(cf *config.AppConfig) *Controller {
 	return &Controller{
 		//articleService: ArticleService.New(),
 		config: cf,
-		//helper: helpers.New(cf),
+		helper: helper.New(cf),
 	}
 }

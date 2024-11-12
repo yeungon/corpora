@@ -1,6 +1,8 @@
 {{define "search"}}
     <div>
-        <input type = "search"/>
-        <a class="btn btn-lg btn-primary" href="/docs/5.3/components/navbar/" role="button">Search</a>
+        <form id="myForm" action='/search/query' method='POST'>
+            <input type = "search"/>            
+            <button type='submit' class="btn btn-primary">Search</button>
+         </form>
     </div>
 {{end}}
