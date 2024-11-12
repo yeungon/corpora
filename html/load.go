@@ -8,14 +8,15 @@ import (
 
 var (
 	//home        = parse("index.html")
-	home        = parseMultiple("template/master/home.html")
+	home        = parseMultiple("template/master/home.html", "template/corpora/search.html")
 	profileShow = parseMultiple("template/profile/show.html")
+	signupUser  = parseMultiple("template/profile/signup.html")
 	profileEdit = parseMultiple("template/profile/edit.html")
 )
 
 // The configuration below is important and REQUIRED, it is a derective.//
 
-//go:embed * template/* template/profile/* template/master/*
+//go:embed * template/profile/* template/master/* template/corpora/*
 var filesystem embed.FS
 
 var funcs = template.FuncMap{

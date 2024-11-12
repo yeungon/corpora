@@ -2,6 +2,18 @@ package html
 
 import "io"
 
+type SignupUserParams struct {
+	Title   string
+	Message string
+}
+
+func SignupUser(w io.Writer, p SignupUserParams, partial string) error {
+	if partial == "" {
+		partial = "layout.html"
+	}
+	return signupUser.ExecuteTemplate(w, partial, p)
+}
+
 type ProfileShowParams struct {
 	Title   string
 	Message string

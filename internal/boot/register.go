@@ -5,8 +5,9 @@ import (
 	"github.com/yeungon/corpora/internal/config"
 )
 
-func Register(r *chi.Mux) {
-	Router(r)
+func Register(r *chi.Mux, appconfig *config.AppConfig) {
+	// Router(r)
+	RegisterRouter(r, appconfig)
 	Static(r)
 	config.New()
 }

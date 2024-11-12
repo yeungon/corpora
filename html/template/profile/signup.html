@@ -1,0 +1,54 @@
+{{define "content"}}
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-3">
+      </div>
+      <div class="col">
+        <div class="my-3">
+          <p style="color: #6c757d;">Vui lòng điền thông tin vào form dưới và kích hoạt tài khoản qua email để đăng bài</p>
+          <h2>Đăng ký</h2>
+        </div>
+        <form action="/signup" method="post">
+         <!-- <input type="hidden" name="csrf_token" value="{{.CSRFtoken}}"> -->
+          <div>
+            <label>Name:</label>
+            <!-- {{with .Form.FieldErrors.name}}
+            <label class='error'>{{.}}</label>
+            {{end}} -->
+            <input type='text' name='name' value='{{.Form.Name}}' required>
+          </div>
+          <div>
+            <label>Email:</label>
+            <!-- {{with .Form.FieldErrors.email}}
+            <label class='error'>{{.}}</label>
+            {{end}} -->
+            <!-- <input type='email' name='email' value='{{.Form.Email}}' required> -->
+            <p id="emailHelp" class="form-text">We'll never share your email with anyone else.</p>
+          </div>
+          <div>
+            <label>Password:</label>
+            <!-- {{with .Form.FieldErrors.password}}
+            <label class='error'>{{.}}</label>
+            {{end}} -->
+            <input type='password' name='password' required>
+          </div>
+  
+          <div>
+            <label>Password confirm:</label>
+            <!-- {{with .Form.FieldErrors.password_confirm}}
+            <label class='error'>{{.}}</label>
+            {{end}} -->
+            <input type='password' name='password_confirm' required>
+          </div>
+          <div style="border: none" class="mb-3 mt-3">
+            <button type="submit" id = "signup_button" class="btn btn-primary">Signup</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-3">
+      </div>
+    </div>
+  </div>
+  
+{{end}}
+

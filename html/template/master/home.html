@@ -1,5 +1,17 @@
 
 {{define "content"}}
+
+<div class="container">
+    <div class="bg-body-tertiary p-5 rounded">
+        <h1>Truy vấn concordance ngữ liệu tiếng Việt</h1>
+  <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
+
+  {{block "search" .}}
+{{end}}
+  
+    </div>
+</div>
+
 <main class="container">
 <div class="bg-body-tertiary p-5 rounded">
   <h1>Navbar example</h1>
@@ -8,6 +20,7 @@
 </div>
 </main>
 
+     
 <h1>Hello Vietnamese Corpora</h1>
 <p>
     Update again. Hi there, this is Vietnamese Corpora <br>

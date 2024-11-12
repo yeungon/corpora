@@ -6,7 +6,16 @@ import (
 	html "github.com/yeungon/corpora/html"
 )
 
-func ProfileShow(w http.ResponseWriter, r *http.Request) {
+func (app *Controller) Signup(w http.ResponseWriter, r *http.Request) {
+	p := html.SignupUserParams{
+		Title:   "Profile Show",
+		Message: "Hello from profile show",
+	}
+
+	html.SignupUser(w, p, Partial(r))
+}
+
+func (app *Controller) ProfileShow(w http.ResponseWriter, r *http.Request) {
 	p := html.ProfileShowParams{
 		Title:   "Profile Show",
 		Message: "Hello from profile show",
@@ -15,7 +24,7 @@ func ProfileShow(w http.ResponseWriter, r *http.Request) {
 	html.ProfileShow(w, p, Partial(r))
 }
 
-func ProfileEdit(w http.ResponseWriter, r *http.Request) {
+func (app *Controller) ProfileEdit(w http.ResponseWriter, r *http.Request) {
 	p := html.ProfileEditParams{
 		Title:   "Profile Edit",
 		Message: "Hello from profile edit",
