@@ -1,59 +1,48 @@
-
 {{define "content"}}
 
-<div class="container">
-    <div class="bg-body-tertiary p-5 rounded">
-        <h1>Truy vấn concordance ngữ liệu tiếng Việt</h1>
-  <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
-
-  {{block "search" .}}
-{{end}}
-  
-    </div>
-</div>
-
 <main class="container">
-<div class="bg-body-tertiary p-5 rounded">
-  <h1>Navbar example</h1>
-  <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
-  <a class="btn btn-lg btn-primary" href="/docs/5.3/components/navbar/" role="button">View navbar docs &raquo;</a>
-</div>
+    <div class="p-5 rounded">
+        <p class="lead">Lựa chọn ngữ liệu truy vấn</p>
+        {{block "search" .}}
+        {{end}}
+
+    </div>
 </main>
+<div class="container">
 
-     
-<h1>Hello Vietnamese Corpora</h1>
-<p>
-    Update again. Hi there, this is Vietnamese Corpora <br>
-    {{.Message}}
-</p>
+    <h1>Hello Vietnamese Corpora</h1>
+    <p>
+        Update again. Hi there, this is Vietnamese Corpora <br>
+        {{.Message}}
+    </p>
 
-{{block "statistics" .}}
-<div id="statistics">
-    <div>Likes: 69</div>
-    <div>Follows: 420</div>
+    {{block "statistics" .}}
+    <div id="statistics">
+        <div>Likes: 69</div>
+        <div>Follows: 420</div>
+    </div>
+    {{end}}
+
+    {{block "logs" .}}
+    <div id="logs">
+        <div>Log message 1</div>
+        <div>Log message 2</div>
+        <div>Log message 3</div>
+    </div>
+    {{end}}
+
+    {{block "hello" .}}
+    <div id="logs">
+        <p>Hello world </p>
+        <div>Log message 2</div>
+        <div>Log message 3</div>
+    </div>
+    {{end}}
+
+    <p>
+        Đây là Vietnamese Corpora
+    </p>
+
 </div>
+<!-- <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=5AuQ6_heYPOW5osH9G1Qn621MIwVZfkxkHTlhxls5HE&cl=ffffff&w=a"></script> -->
 {{end}}
-
-{{block "logs" .}}
-<div id="logs">
-    <div>Log message 1</div>
-    <div>Log message 2</div>
-    <div>Log message 3</div>
-</div>
-{{end}}
-
-{{block "hello" .}}
-<div id="logs">
-    <p>Hello world </p>
-    <div>Log message 2</div>
-    <div>Log message 3</div>
-</div>
-{{end}}
-
-<p>
-    Đây là Vietnamese Corpora
-</p>
-
-
-{{end}}
-

@@ -1,8 +1,19 @@
 {{define "search"}}
     <div>
         <form id="myForm" action='/search/query' method='POST'>
-            <input type = "search"/>            
-            <button type='submit' class="btn btn-primary">Search</button>
+            <input class="form-control" placeholder="Nhập từ khóa..." type = "search"/>            
+            <br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1">Vietnamese</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">Vietnamese-English</label>
+              </div>              
+              <br>
+            <button type='submit' class="btn btn-search">Search</button>
          </form>
     </div>
 {{end}}

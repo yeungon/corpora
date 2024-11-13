@@ -1,7 +1,6 @@
 package boot
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -12,7 +11,6 @@ import (
 func Static(r *chi.Mux) {
 	workDir, _ := os.Getwd()
 	filesDir := http.Dir(filepath.Join(workDir, "static"))
-	fmt.Println(filesDir)
 	fileServer := http.StripPrefix("/static", http.FileServer(http.Dir(filesDir)))
 	r.Handle("/static/*", fileServer)
 }
