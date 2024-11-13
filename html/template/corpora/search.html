@@ -1,19 +1,26 @@
 {{define "search"}}
-    <div>
-        <form id="myForm" action='/search/query' method='POST'>
-            <input class="form-control" placeholder="Nhập từ khóa..." type = "search"/>            
-            <br>
+<div>
+    <form id="corpus_query" action='/query' method='GET'>
+        <div class="d-flex justify-content-center align-items-center">
+            <input name ="keyword" id="input_search" class="form-control" placeholder="Nhập từ khóa..." type="search" />
+        </div>
+        <br>
+        <div class="d-flex justify-content-center align-items-center">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                    value="option1">
                 <label class="form-check-label" for="inlineRadio1">Vietnamese</label>
-              </div>
+            </div>
 
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="option2">
                 <label class="form-check-label" for="inlineRadio2">Vietnamese-English</label>
-              </div>              
-              <br>
-            <button type='submit' class="btn-search">Search</button>
-         </form>
-    </div>
+            </div>
+        </div>
+        <br>
+        <button type='submit' class="btn-search">Search</button>
+
+    </form>
+</div>
 {{end}}

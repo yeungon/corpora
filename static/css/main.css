@@ -46,3 +46,47 @@
 .form-control {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+#input_search{
+  padding: 12px 0 12px 15px;  
+  max-width: 575px;
+  background-color: #fffcf4;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding a soft shadow */
+}
+
+
+@media (max-width: 480px) {
+  /* Styles for ultra-small devices */
+  
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) { 
+  .header{
+    display: none;
+  }
+ }
+
+
+
+/* Small devices (landscape phones, 576px and up) */
+
+@media (min-width: 576px) and (max-width: 767px) {  }
+
+
+
+/* Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) and (max-width: 991px) {  }
+
+
+
+/* Large devices (desktops, 992px and up) */
+
+@media (min-width: 992px) and (max-width: 1199px) {  }
+
+
+
+/* Extra large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {  }

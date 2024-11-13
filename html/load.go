@@ -8,7 +8,7 @@ import (
 
 var (
 	//home        = parse("index.html")
-	home        = parseMultiple("template/master/home.html", "template/corpora/search.html")
+	home        = parseMultiple("template/master/home.html", "template/corpora/search.html", "template/corpora/result.html")
 	profileShow = parseMultiple("template/profile/show.html")
 	signupUser  = parseMultiple("template/profile/signup.html")
 	profileEdit = parseMultiple("template/profile/edit.html")

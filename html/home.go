@@ -5,8 +5,9 @@ import (
 )
 
 type IndexParams struct {
-	Title   string
-	Message string
+	Title       string
+	Message     string
+	StateSearch string
 }
 
 func Home(w io.Writer, p IndexParams) error {
