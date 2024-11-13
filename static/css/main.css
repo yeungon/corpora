@@ -5,39 +5,44 @@
 }
 
 @font-face {
-    font-family: adelle;
-    src: url(https://res.cloudinary.com/yeungon/raw/upload/v1662636833/font/vietnamese_adelleSansEXT-Regular.otf);
+  font-family: adelle;
+  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1662636833/font/vietnamese_adelleSansEXT-Regular.otf);
 }
 
-:root{
+:root {
   --font_sans: adelle,
 }
 
-*{
+* {
   font-family: var(--font_sans);
 }
 
-.adelle{
-  font-family:var(--font_sans);
+.adelle {
+  font-family: var(--font_sans);
 }
 
 
-  .inform{
-    color: #612ef8;    
-  }
+.inform {
+  color: #612ef8;
+}
 
-  .btn-search{
-    display: flex;
-    align-items: center;
-    height: 38px;
-    color: #fff;
-    background-color: #612ef8;
-    padding: 2px 15px;
-    border: none;
-    font-size: 16px;
-    border-radius: 5px;
-  }
+.btn-search {
+  display: inline-block; /* Or block, if you need */
+  align-items: center;
+  height: 38px;
+  color: #fff;
+  background-color: #612ef8;
+  padding: 2px 15px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
 
-  .form-control {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
+.btn-search:hover {
+  transform: scale(1.1);
+  background-color: #29039c;
+}
+.form-control {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
