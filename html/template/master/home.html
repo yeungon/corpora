@@ -1,12 +1,18 @@
 {{define "content"}}
 
 <main class="container">
-    <div class="p-5 rounded">
-        <p class="lead">Lựa chọn ngữ liệu truy vấn</p>
-        {{block "search" .}}
-        {{end}}
+    <div class="row align-items-center">
+        <div class="col">
+            <div class="p-5 rounded">        
+                <p class="lead">Lựa chọn ngữ liệu truy vấn</p>
+                {{block "search" .}}
+                {{end}}
+        
+            </div>
+        </div>
+      </div>
 
-    </div>
+   
 </main>
 <div class="container">
 
