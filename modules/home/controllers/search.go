@@ -16,16 +16,24 @@ func (app *Controller) SearchConcordancePost(w http.ResponseWriter, r *http.Requ
 	selectedOption := r.URL.Query().Get("corpusOptions")
 
 	fmt.Println("Selected option:", selectedOption) // Perform search and retrieve results
-	results, err := models.MeliSearch(query)
+	data, err := models.MeliSearch(query)
+
+	// Convert the []interface{} into JSON []byte
+	dataBytes, err := json.Marshal(data)
 	if err != nil {
-		http.Error(w, "Search failed", http.StatusInternalServerError)
+		fmt.Println("Error marshaling data:", err)
 		return
 	}
 
-	// Convert results to JSON string for display
-	resultsJSON, err := json.MarshalIndent(results, "", "  ")
+	var items []html.Item
+	err = json.Unmarshal([]byte(dataBytes), &items)
+
 	if err != nil {
-		http.Error(w, "Failed to format JSON", http.StatusInternalServerError)
+		fmt.Println("Error unmarshalling JSON:", err)
+	}
+
+	if err != nil {
+		http.Error(w, "Search failed", http.StatusInternalServerError)
 		return
 	}
 
@@ -33,7 +41,7 @@ func (app *Controller) SearchConcordancePost(w http.ResponseWriter, r *http.Requ
 		Title:       "Vietnamese Corpora",
 		Message:     query,
 		StateSearch: true,
-		Results:     string(resultsJSON),
+		Results:     items,
 	}
 
 	html.Home(w, p)

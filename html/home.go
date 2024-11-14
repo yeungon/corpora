@@ -4,11 +4,25 @@ import (
 	"io"
 )
 
+// Define the structure for a single item
+type Item struct {
+	Author       string
+	Content      string
+	CrawledAt    string
+	ID           int
+	PictureCount int
+	Processed    int
+	Source       string
+	Title        string
+	Topic        string
+	URL          string
+}
+
 type IndexParams struct {
 	Title       string
 	Message     string
 	StateSearch bool
-	Results     string
+	Results     []Item
 }
 
 func Home(w io.Writer, p IndexParams) error {

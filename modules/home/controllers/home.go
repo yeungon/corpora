@@ -10,7 +10,7 @@ import (
 func (app *Controller) Home(w http.ResponseWriter, r *http.Request) {
 	// test := config.GET().TEST
 	// fmt.Println("Fetching config info: ", test)
-	fmt.Println("In dữ liệu Dependency Injection: ", app.config.Test)
+	fmt.Println("In dữ liệu Dependency Injection: ", app.config)
 
 	p := html.IndexParams{
 		Title:   "Vietnamese Corpora",
