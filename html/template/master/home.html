@@ -8,6 +8,7 @@
                 {{end}}
                 
                 {{if .StateSearch}}
+                    <h4 class = "inform">Từ khóa: {{.Message}}</h4>
                     {{block "result" .}}
                     {{end}}
                 {{end}}
@@ -53,4 +54,16 @@
 
 </div>
 <!-- <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=5AuQ6_heYPOW5osH9G1Qn621MIwVZfkxkHTlhxls5HE&cl=ffffff&w=a"></script> -->
+
+<style>
+    pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style>
+
 {{end}}

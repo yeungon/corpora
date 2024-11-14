@@ -7,7 +7,8 @@ import (
 type IndexParams struct {
 	Title       string
 	Message     string
-	StateSearch string
+	StateSearch bool
+	Results     string
 }
 
 func Home(w io.Writer, p IndexParams) error {

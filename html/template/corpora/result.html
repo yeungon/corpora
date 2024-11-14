@@ -1,5 +1,17 @@
 {{define "result"}}
 <table id="concordance" class="concordance mt-3">
+
+    <h1>{{ .Title }}</h1>
+    <p>Search Query: {{ .Message }}</p>
+
+    {{ if .StateSearch }}
+        <h2>Results</h2>
+        <pre>{{ .Results }}</pre>
+    {{ else }}
+        <p>No results found.</p>
+    {{ end }}
+
+    
     <tbody><tr><td style="width: 462.903px;"></td><td></td><td class="count"></td></tr>
     
         <tr>

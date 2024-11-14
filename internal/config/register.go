@@ -14,7 +14,9 @@ var (
 )
 
 type ENV struct {
-	TEST string
+	TEST               string
+	MELISEARCH_URL     string
+	MELISEARCH_API_KEY string
 }
 
 // Register the config
@@ -25,8 +27,12 @@ func New() *ENV {
 			log.Fatal("Error loading .env file")
 		}
 		test_env := os.Getenv("TEST")
+		search_url := os.Getenv("MELISEARCH_URL")
+		search_api := os.Getenv("MELISEARCH_API_KEY")
 		env = &ENV{
-			TEST: test_env,
+			TEST:               test_env,
+			MELISEARCH_URL:     search_url,
+			MELISEARCH_API_KEY: search_api,
 		}
 	})
 	return env
