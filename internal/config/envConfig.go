@@ -14,9 +14,10 @@ var (
 )
 
 type ENV struct {
-	TEST               string
-	MELISEARCH_URL     string
-	MELISEARCH_API_KEY string
+	TEST                string
+	MELISEARCH_URL      string
+	MELISEARCH_API_KEY  string
+	MANTICORESEARCH_URL string
 }
 
 // Register the config
@@ -29,10 +30,13 @@ func New() *ENV {
 		test_env := os.Getenv("TEST")
 		search_url := os.Getenv("MELISEARCH_URL")
 		search_api := os.Getenv("MELISEARCH_API_KEY")
+		manticore_url := os.Getenv("MANTICORESEARCH_URL")
+
 		env = &ENV{
-			TEST:               test_env,
-			MELISEARCH_URL:     search_url,
-			MELISEARCH_API_KEY: search_api,
+			TEST:                test_env,
+			MELISEARCH_URL:      search_url,
+			MELISEARCH_API_KEY:  search_api,
+			MANTICORESEARCH_URL: manticore_url,
 		}
 	})
 	return env
