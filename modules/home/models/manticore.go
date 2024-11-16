@@ -2,7 +2,6 @@ package models
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 
@@ -10,7 +9,12 @@ import (
 	"github.com/yeungon/corpora/internal/config"
 )
 
-func Manticore() {
+type ManticoreSearchResult struct {
+	Word   string `json:"word"`
+	Define string `json:"define"`
+}
+
+func Manticore(keyword string) ([]ManticoreSearchResult, int32) {
 	configuration := manticoreclient.NewConfiguration()
 	searchURL := config.GET().MANTICORESEARCH_URL
 	configuration.Servers[0].URL = searchURL
@@ -19,29 +23,39 @@ func Manticore() {
 	// Prepare a search request for the "my_index" index
 	searchRequest := *manticoreclient.NewSearchRequest("my_index")
 
-	// Create a match query similar to the one in your curl command
 	query := map[string]interface{}{
 		"match": map[string]interface{}{
-			"*": "learn",
+			"*": keyword,
 		},
 	}
 	searchRequest.SetQuery(query)
 
+	// Set limit to 5 results
+	searchRequest.SetLimit(5)
+
 	// Execute the search request
 	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
-
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.Search`: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-		return
+		// Return an empty slice and 0 as the total count in case of an error
+		return []ManticoreSearchResult{}, 0
 	}
 
-	// Marshal the response to JSON and print it
-	jsonData, err := json.MarshalIndent(resp, "", "  ")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error marshalling response: %v\n", err)
-		return
-	}
+	// Create a slice of ManticoreSearchResult from the response
+	var results []ManticoreSearchResult
 
-	fmt.Fprintf(os.Stdout, "Response from `SearchAPI.Search`:\n%s\n", jsonData)
+	total := *resp.Hits.Total
+	fmt.Println(total)
+
+	// Iterate through the hits and fill in the results slice
+	// for _, hit := range resp.Hits.Hits {
+	// 	results = append(results, ManticoreSearchResult{
+	// 		Word:   hit["word"].(string),
+	// 		Define: hit["define"].(string),
+	// 	})
+	// }
+
+	// Return the results and the total
+	return results, total
 }

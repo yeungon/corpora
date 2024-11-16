@@ -23,7 +23,8 @@ type IndexParams struct {
 	Message      string
 	StateSearch  bool
 	Results      []Item
-	countMatched int
+	CountMatched int
+	TotalMatch   int32
 }
 
 func Home(w io.Writer, p IndexParams) error {

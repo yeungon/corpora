@@ -10,8 +10,8 @@ import (
 func RouteProvider(r *chi.Mux, appconfig *config.AppConfig) {
 	homeCtrl := home.New(appconfig)
 	r.Get("/", homeCtrl.Home)
-	r.Get("/query", homeCtrl.SearchConcordancePost)
-	r.Get("/test", homeCtrl.SearchManticore)
+	// r.Get("/query", homeCtrl.SearchConcordancePost)
+	r.Get("/query", homeCtrl.SearchManticore)
 
 	// User router
 	userCtrl := user.New(appconfig)

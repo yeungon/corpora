@@ -1,50 +1,26 @@
 {{define "result"}}
 <table id="concordance" class="concordance mt-3">
-
     <h1>{{ .Title }}</h1>
     <p>Search Query: {{ .Message }}</p>
 
     {{if .StateSearch}}
-    <h2>Search Results</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Author</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Source</th>
-                <th>Topic</th>
-                <th>URL</th>
-                <th>Crawled At</th>
-                <th>Picture Count</th>
-                <th>Processed</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{range .Results}}
-                <tr>
-                    <td>{{.ID}}</td>
-                    <td>{{.Author}}</td>
-                    <td>{{.Title}}</td>
-                    <td>{{.Content}}</td>
-                    <td>{{.Source}}</td>
-                    <td>{{.Topic}}</td>
-                    <td><a href="{{.URL}}" target="_blank">Link</a></td>
-                    <td>{{.CrawledAt}}</td>
-                    <td>{{.PictureCount}}</td>
-                    <td>{{.Processed}}</td>
-                </tr>
-            {{else}}
-                <tr>
-                    <td colspan="10">No results found</td>
-                </tr>
-            {{end}}
-        </tbody>
+    <h2>Search Results {{.TotalMatch}}</h2>
+    <table border="1" cellpadding="10" cellspacing="0">
+        <tr>
+            <th>Word</th>
+            <th>Definition</th>
+        </tr>
+
+        {{range .Results}}
+        <tr>
+            <td>{{ .Word }}</td>
+            <td>{{ .Define }}</td>
+        </tr>
+        {{end}}
+
     </table>
-{{else}}
-    <p>No search performed.</p>
-{{end}}
-
-
+    {{else}}
+    <p>No results found.</p>
+    {{end}}
+</table>
 {{end}}
