@@ -2,7 +2,7 @@
 <div>
     <form id="corpus_query" action='/query' method='GET'>
         <div class="d-flex justify-content-center align-items-center">
-            <input name ="keyword" id="input_search" class="form-control" placeholder="Nhập từ khóa..." type="search" />
+            <input autoFocus name ="keyword" id="input_search" class="form-control" placeholder="Nhập từ khóa..." type="search" />
         </div>
         <br>
         <div class="d-flex justify-content-center align-items-center">
@@ -22,4 +22,14 @@
 
     </form>
 </div>
+<script>
+
+    const search_input = document.querySelector("#input_search");
+
+    window.onload = function(){        
+        console.log(search_input)
+    }
+
+
+</script>
 {{end}}

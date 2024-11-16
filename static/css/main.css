@@ -1,5 +1,5 @@
 @font-face {
-  font-family: sans;
+  font-family: Google_Sans;
   src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665459305/font/Vietnamese_Good_GoogleSans-Regular.ttf);
 
 }
@@ -9,25 +9,49 @@
   src: url(https://res.cloudinary.com/yeungon/raw/upload/v1662636833/font/vietnamese_adelleSansEXT-Regular.otf);
 }
 
+@font-face {
+  font-family: ACaslonPro;
+  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1702481593/font/VNF-ACaslonPro-Regular.ttf);
+}
+
+@font-face {
+  font-family: SVN_Futura_Regular;
+  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665936770/font/SFUFuturaRegular.TTF)
+}
+
+html,
+body {
+  height: 100%;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  --font_sans: adelle,
+  --font_adelle: adelle;
+  --font_sans: Google_Sans;
+  --font_futura: SVN_Futura_Regular;
 }
 
 * {
-  font-family: var(--font_sans);
+  font-family: var(--font_adelle);
 }
 
 .adelle {
-  font-family: var(--font_sans);
+  font-family: var(--font_adelle);
 }
 
+.futura {
+  font-family: var(--font_futura);
+}
 
 .inform {
-  color: #612ef8;
+  color: #415262;
 }
 
 .btn-search {
-  display: inline-block; /* Or block, if you need */
+  display: inline-block;
+  /* Or block, if you need */
   align-items: center;
   height: 38px;
   color: #fff;
@@ -43,50 +67,52 @@
   transform: scale(1.1);
   background-color: #29039c;
 }
+
 .form-control {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-#input_search{
-  padding: 12px 0 12px 15px;  
+#input_search {
+  padding: 12px 0 12px 15px;
   max-width: 575px;
   background-color: #fffcf4;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding a soft shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Adding a soft shadow */
 }
 
 
 @media (max-width: 480px) {
   /* Styles for ultra-small devices */
-  
+
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
-@media (max-width: 575px) { 
-  .header{
+@media (max-width: 575px) {
+  .header {
     display: none;
   }
- }
+}
 
 
 
 /* Small devices (landscape phones, 576px and up) */
 
-@media (min-width: 576px) and (max-width: 767px) {  }
+@media (min-width: 576px) and (max-width: 767px) {}
 
 
 
 /* Medium devices (tablets, 768px and up) */
 
-@media (min-width: 768px) and (max-width: 991px) {  }
+@media (min-width: 768px) and (max-width: 991px) {}
 
 
 
 /* Large devices (desktops, 992px and up) */
 
-@media (min-width: 992px) and (max-width: 1199px) {  }
+@media (min-width: 992px) and (max-width: 1199px) {}
 
 
 
 /* Extra large devices (large desktops, 1200px and up) */
 
-@media (min-width: 1200px) {  }
+@media (min-width: 1200px) {}
