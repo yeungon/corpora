@@ -6,16 +6,19 @@ import (
 
 // Define the structure for a single item
 type Item struct {
+	ID           int `json:"_id"`
+	Score        int `json:"_score"`
 	Author       string
 	Content      string
 	CrawledAt    string
-	ID           int
 	PictureCount int
 	Processed    int
 	Source       string
 	Title        string
 	Topic        string
 	URL          string
+	Define       string `json:"_source.define"`
+	Word         string `json:"_source.word"`
 }
 
 type IndexParams struct {
