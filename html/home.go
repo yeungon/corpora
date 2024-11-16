@@ -19,10 +19,11 @@ type Item struct {
 }
 
 type IndexParams struct {
-	Title       string
-	Message     string
-	StateSearch bool
-	Results     []Item
+	Title        string
+	Message      string
+	StateSearch  bool
+	Results      []Item
+	countMatched int
 }
 
 func Home(w io.Writer, p IndexParams) error {

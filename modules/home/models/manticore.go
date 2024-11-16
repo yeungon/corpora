@@ -12,30 +12,31 @@ import (
 
 func Manticore() {
 	configuration := manticoreclient.NewConfiguration()
-	search_url := config.GET().MANTICORESEARCH_URL
-	configuration.Servers[0].URL = search_url
+	searchURL := config.GET().MANTICORESEARCH_URL
+	configuration.Servers[0].URL = searchURL
 	apiClient := manticoreclient.NewAPIClient(configuration)
 
-	// // Add documents to an index
-	// docs := []string{
-	// 	"{\"insert\": {\"index\" : \"test\", \"id\" : 1, \"doc\" : {\"title\" : \"Title 1\"}}}",
-	// 	"{\"insert\": {\"index\" : \"test\", \"id\" : 2, \"doc\" : {\"title\" : \"Title 2\"}}}",
-	// }
-	// apiClient.IndexAPI.Bulk(context.Background()).Body(strings.Join(docs[:], "\n")).Execute()
+	// Prepare a search request for the "my_index" index
+	searchRequest := *manticoreclient.NewSearchRequest("my_index")
 
-	// response from `Search`: SearchRequest
-	searchRequest := *manticoreclient.NewSearchRequest("test")
-	// Perform a search
-	query := map[string]interface{}{"query_string": "Title"}
+	// Create a match query similar to the one in your curl command
+	query := map[string]interface{}{
+		"match": map[string]interface{}{
+			"*": "learn",
+		},
+	}
 	searchRequest.SetQuery(query)
+
+	// Execute the search request
 	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.Search``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.Search`: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+		return
 	}
 
-	// Marshal the response to JSON
+	// Marshal the response to JSON and print it
 	jsonData, err := json.MarshalIndent(resp, "", "  ")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error marshalling response: %v\n", err)
@@ -43,5 +44,4 @@ func Manticore() {
 	}
 
 	fmt.Fprintf(os.Stdout, "Response from `SearchAPI.Search`:\n%s\n", jsonData)
-
 }

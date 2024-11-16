@@ -16,7 +16,7 @@ func (app *Controller) SearchConcordancePost(w http.ResponseWriter, r *http.Requ
 	selectedOption := r.URL.Query().Get("corpusOptions")
 
 	fmt.Println("Selected option:", selectedOption) // Perform search and retrieve results
-	data, err := models.MeliSearch(query)
+	data, totalMatched, contentMatchedCount, totalMatchCount, _ := models.MeliSearch(query)
 
 	// Convert the []interface{} into JSON []byte
 	dataBytes, err := json.Marshal(data)
@@ -37,6 +37,7 @@ func (app *Controller) SearchConcordancePost(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
+	fmt.Println("totalMatched, contentMatchedCount, totalMatchCount", totalMatched, contentMatchedCount, totalMatchCount)
 	p := html.IndexParams{
 		Title:       "Vietnamese Corpora",
 		Message:     query,
