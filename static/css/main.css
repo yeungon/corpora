@@ -10,35 +10,34 @@
 }
 
 @font-face {
-  font-family: ACaslonPro;
-  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1702481593/font/VNF-ACaslonPro-Regular.ttf);
-}
-
-@font-face {
   font-family: SVN_Futura_Regular;
   src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665936770/font/SFUFuturaRegular.TTF)
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+  font-family: var(--font_common);   
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body {
   height: 100%;
-  scroll-behavior: smooth;
-  margin: 0;
-  padding: 0;
+  scroll-behavior: smooth;  
 }
 
 :root {
   --font_adelle: adelle;
   --font_sans: Google_Sans;
   --font_futura: SVN_Futura_Regular;
-}
-
-* {
-  font-family: var(--font_adelle);
+  --font_common: "Inter", sans-serif;
 }
 
 .adelle {
-  font-family: var(--font_adelle);
+  font-family: adelle;
 }
 
 .futura {

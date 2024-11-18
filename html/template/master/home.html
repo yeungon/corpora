@@ -2,40 +2,23 @@
 
 <main class="container">
     <div class="row align-items-center">
-        <div class="col">
+        <div class="col-12 col-sm-12">
             <div class="">
                 {{block "search" .}}
                 {{end}}
-                
-                {{if .StateSearch}}
-                    <h4 class = "inform">Từ khóa: {{.Message}}</h4>
-                    {{block "result" .}}
+                {{if .StateSearch}}                                
+                    {{block "result" .}}                    
                     {{end}}
                 {{end}}
-            
             </div>
         </div>
     </div>
 </main>
 
-<div class="container">
-    <h1>Hello Vietnamese Corpora</h1>
-    <p>
-        Update again. Hi there, this is Vietnamese Corpora <br>
-        {{.Message}}
-    </p>   
-</div>
 <!-- <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=5AuQ6_heYPOW5osH9G1Qn621MIwVZfkxkHTlhxls5HE&cl=ffffff&w=a"></script> -->
 
 <style>
-    pre {
-        background-color: #f4f4f4;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-    }
+
 </style>
 
 {{end}}

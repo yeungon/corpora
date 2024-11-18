@@ -28,6 +28,7 @@ type IndexParams struct {
 	Results      []Item
 	CountMatched int
 	TotalMatch   int32
+	UserData     interface{}
 }
 
 func Home(w io.Writer, p IndexParams) error {

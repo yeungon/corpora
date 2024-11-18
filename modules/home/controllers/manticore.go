@@ -1,33 +1,34 @@
 package home
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/yeungon/corpora/html"
 	"github.com/yeungon/corpora/modules/home/models"
 )
 
+type SearchData struct {
+	Keyword       string
+	CorpusOptions string
+}
+
+var items []html.Item
+var total int32
+
 func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
-
-	// Max body size for request
-	r.Body = http.MaxBytesReader(w, r.Body, 4096)
-
-	// Get the search keyword from the URL query parameter
 	query := r.URL.Query().Get("keyword")
-	fmt.Printf("Received search query: %s\n", query)
+	selectedOption := r.URL.Query().Get("corpusOptions")
+	SearchDataInstance := SearchData{
+		Keyword:       query,
+		CorpusOptions: selectedOption,
+	}
 
-	// Call the Manticore model to get search results
-	searchResults, total := models.Manticore(query)
+	//index_selected := "poetic_nom"
+	index_selected := "my_index"
 
-	// Initialize a slice to hold the parsed items
-	var items []html.Item
-	//Convert the Manticore search results into html.Item for rendering
-	for _, result := range searchResults {
-		items = append(items, html.Item{
-			Word:   result.Word,
-			Define: result.Define,
-		})
+	if index_selected == "my_index" {
+		items, total = SearchEnglish(query, index_selected)
+
 	}
 
 	// Prepare the IndexParams for the HTML page
@@ -37,8 +38,22 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 		StateSearch: true,
 		Results:     items,
 		TotalMatch:  total,
+		UserData:    SearchDataInstance,
 	}
 
 	// Render the Home page template with the search results
 	html.Home(w, p)
+}
+
+func SearchEnglish(query string, index_selected string) ([]html.Item, int32) {
+	var items []html.Item
+	searchResults, total := models.Manticore(query, index_selected)
+	for _, result := range searchResults {
+		items = append(items, html.Item{
+			Word:   result.Word,
+			Define: result.Define,
+		})
+	}
+	return items, total
+
 }

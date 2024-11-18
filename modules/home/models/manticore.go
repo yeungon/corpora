@@ -14,14 +14,13 @@ type ManticoreSearchResult struct {
 	Define string `json:"define"`
 }
 
-func Manticore(keyword string) ([]ManticoreSearchResult, int32) {
+func Manticore(keyword string, index_selected string) ([]ManticoreSearchResult, int32) {
 	configuration := manticoreclient.NewConfiguration()
 	searchURL := config.GET().MANTICORESEARCH_URL
 	configuration.Servers[0].URL = searchURL
 	apiClient := manticoreclient.NewAPIClient(configuration)
 
-	// Prepare a search request for the "my_index" index
-	searchRequest := *manticoreclient.NewSearchRequest("my_index")
+	searchRequest := *manticoreclient.NewSearchRequest(index_selected)
 
 	query := map[string]interface{}{
 		"match": map[string]interface{}{
@@ -31,7 +30,7 @@ func Manticore(keyword string) ([]ManticoreSearchResult, int32) {
 	searchRequest.SetQuery(query)
 
 	// Set limit to 5 results
-	searchRequest.SetLimit(15)
+	searchRequest.SetLimit(50)
 
 	// Execute the search request
 	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
@@ -47,8 +46,8 @@ func Manticore(keyword string) ([]ManticoreSearchResult, int32) {
 
 	// Get the total hits
 	total := *resp.Hits.Total
-
-	// fmt.Println("Total hits:", total)
+	fmt.Println("Index_lsselected", index_selected)
+	fmt.Println("Total hits:", total)
 
 	// Iterate through the hits
 	for _, hit := range resp.Hits.Hits {

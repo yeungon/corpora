@@ -1,11 +1,11 @@
 {{define "result"}}
-<table id="concordance" class="concordance mt-3">
-    <h1>{{ .Title }}</h1>
-    <p>Search Query: {{ .Message }}</p>
+<table id="concordance" class="concordance mt-3">        
+    <p>Search Query: {{ .UserData.Keyword}}</p>
+    <p>Language Selected: {{ .UserData.CorpusOptions}}</p>
 
     {{if .StateSearch}}
     <h2>Search Results {{.TotalMatch}}</h2>
-    <table border="1" cellpadding="10" cellspacing="0">
+    <table cellpadding="10" cellspacing="0">
         <tr>
             <th>Word</th>
             <th>Definition</th>
