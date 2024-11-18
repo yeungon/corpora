@@ -24,6 +24,7 @@ type Item struct {
 type IndexParams struct {
 	Title        string
 	Message      string
+	SourceIndex  string
 	StateSearch  bool
 	Results      []Item
 	CountMatched int

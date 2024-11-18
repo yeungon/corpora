@@ -1,5 +1,5 @@
 {{define "result"}}
-<table id="concordance" class="concordance mt-3">        
+<table id="concordance" class="concordance mt-3">
     <p>Search Query: {{ .UserData.Keyword}}</p>
     <p>Language Selected: {{ .UserData.CorpusOptions}}</p>
 
@@ -11,13 +11,24 @@
             <th>Definition</th>
         </tr>
 
+        {{ if eq .SourceIndex "vietnamese_news" }}
         {{range .Results}}
         <tr>
-            <td>{{ .Word }}</td>
-            <td>{{ .Define }}</td>
+            <td>{{ .Title }}</td>
+            <td>{{ .Content }}</td>
         </tr>
         {{end}}
+        {{end}}
 
+        {{ if eq .SourceIndex "english" }}
+        {{range .Results}}
+        <tr>
+            <td>{{ .Title }}</td>
+            <td>{{ .Content }}</td>
+        </tr>
+        {{end}}
+        {{end}}
+       
     </table>
     {{else}}
     <p>No results found.</p>
