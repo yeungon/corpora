@@ -1,7 +1,9 @@
 package home
 
 import (
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/yeungon/corpora/html"
 	"github.com/yeungon/corpora/modules/home/models"
@@ -20,6 +22,35 @@ var source string
 func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query().Get("keyword")
 	selectedOption := r.URL.Query().Get("corpusOptions")
+
+	queryParams := r.URL.Query()
+	pageParams := queryParams["page"]
+
+	scheme := "http"
+	if r.TLS != nil {
+		scheme = "https"
+	}
+	fullURL := fmt.Sprintf("%s://%s%s", scheme, r.Host, r.RequestURI)
+
+	fmt.Println("r.RequestURI", r.RequestURI)
+
+	var page int
+	if len(pageParams) > 0 {
+		// Convert the first element to an int
+		parsedPage, err := strconv.Atoi(pageParams[0])
+		if err != nil {
+			fmt.Println("Error parsing page:", err)
+			return
+		}
+		page = parsedPage
+	} else {
+		page = 1
+	}
+
+	fmt.Println("keyword:", queryParams["keyword"])
+	fmt.Println("page:", page)
+	fmt.Println("fullURL:", fullURL)
+
 	//index_selected := "poetic_nom"
 	index_selected := "my_news"
 
@@ -31,7 +62,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 
 	if index_selected == "my_news" {
 		source = "vietnamese_news"
-		items, total = SearchMyNews(query, index_selected)
+		items, total = SearchMyNews(query, index_selected, page)
 
 	}
 
@@ -49,6 +80,8 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 		Results:     items,
 		TotalMatch:  total,
 		UserData:    SearchDataInstance,
+		CurrentURL:  fullURL,
+		Page:        page,
 	}
 
 	// Render the Home page template with the search results
@@ -68,9 +101,9 @@ func SearchEnglish(query string, index_selected string) ([]html.Item, int32) {
 
 }
 
-func SearchMyNews(query string, index_selected string) ([]html.Item, int32) {
+func SearchMyNews(query string, index_selected string, page int) ([]html.Item, int32) {
 	var items []html.Item
-	searchResults, total := models.ManticoreMyNews(query, index_selected)
+	searchResults, total := models.ManticoreMyNews(query, index_selected, page)
 	for _, result := range searchResults {
 		items = append(items, html.Item{
 			Title:   result.Title,

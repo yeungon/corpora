@@ -30,6 +30,8 @@ type IndexParams struct {
 	CountMatched int
 	TotalMatch   int32
 	UserData     interface{}
+	CurrentURL   string
+	Page         int
 }
 
 func Home(w io.Writer, p IndexParams) error {

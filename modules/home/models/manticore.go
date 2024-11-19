@@ -80,7 +80,7 @@ func Manticore(keyword string, index_selected string) ([]ManticoreSearchResult, 
 	return results, total
 }
 
-func ManticoreMyNews(keyword string, index_selected string) ([]ManticoreSearchResultMyNews, int32) {
+func ManticoreMyNews(keyword string, index_selected string, page int) ([]ManticoreSearchResultMyNews, int32) {
 	configuration := manticoreclient.NewConfiguration()
 	searchURL := config.GET().MANTICORESEARCH_URL
 	configuration.Servers[0].URL = searchURL
@@ -102,8 +102,16 @@ func ManticoreMyNews(keyword string, index_selected string) ([]ManticoreSearchRe
 
 	searchRequest.SetQuery(query)
 
+	// Define page and pageSize for pagination
+
+	pageSize := 3                   // Number of results per page
+	offset := (page - 1) * pageSize // Calculate offset based on page and pageSize
+
 	// Set limit to 5 results
-	searchRequest.SetLimit(50)
+	searchRequest.SetLimit(int32(pageSize))
+	searchRequest.SetOffset(int32(offset))
+
+	fmt.Println("offset: ", offset)
 
 	// Execute the search request
 	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
@@ -116,19 +124,12 @@ func ManticoreMyNews(keyword string, index_selected string) ([]ManticoreSearchRe
 
 	// Create a slice of ManticoreSearchResult from the response
 	var results []ManticoreSearchResultMyNews
-
-	// Get the total hits
 	total := *resp.Hits.Total
-	fmt.Println("Index_lsselected", index_selected)
-	fmt.Println("Total hits:", total)
 
 	// Iterate through the hits
 	for _, hit := range resp.Hits.Hits {
 		// Extract the _source field, which is a map
 		source := hit["_source"].(map[string]interface{})
-
-		//fmt.Println(source)
-
 		title, titleOk := source["title"].(string)
 		content, contentOk := source["content"].(string)
 

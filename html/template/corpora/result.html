@@ -5,19 +5,19 @@
 
     {{if .StateSearch}}
     <h2>Search Results {{.TotalMatch}}</h2>
-    <table border =" 1" cellpadding="10" cellspacing="0" style="width: 100%;">
+    <table border=" 1" cellpadding="10" cellspacing="0" style="width: 100%;">
         <tr>
             <th>Word</th>
             <th>Definition</th>
         </tr>
 
         {{ if eq .SourceIndex "vietnamese_news" }}
-        {{range .Results}}
-        <tr>
-            <td>{{ .Title }}</td>
-            <td>{{ .Content }}</td>
-        </tr>
-        {{end}}
+            {{range .Results}}
+            <tr>
+                <td>{{ .Title }}</td>
+                <td>{{ .Content }}</td>
+            </tr>
+            {{end}}       
         {{end}}
 
         {{ if eq .SourceIndex "english" }}
@@ -28,8 +28,23 @@
         </tr>
         {{end}}
         {{end}}
-       
     </table>
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=2">2</a></li>
+                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=3">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <h1>SourceIndex: {{.SourceIndex}}</h1>
     {{else}}
     <p>No results found.</p>
     {{end}}
