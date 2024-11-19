@@ -26,12 +26,13 @@ func Manticore(keyword string, index_selected string) ([]ManticoreSearchResult, 
 	apiClient := manticoreclient.NewAPIClient(configuration)
 
 	searchRequest := *manticoreclient.NewSearchRequest(index_selected)
-
+	// Option 2: Onlyreturn matched words/phrase
 	query := map[string]interface{}{
-		"match": map[string]interface{}{
-			"*": keyword,
+		"match_phrase": map[string]interface{}{
+			"*": keyword, // Matches the entire phrase across all fields
 		},
 	}
+
 	searchRequest.SetQuery(query)
 
 	// Set limit to 5 results
@@ -84,14 +85,21 @@ func ManticoreMyNews(keyword string, index_selected string) ([]ManticoreSearchRe
 	searchURL := config.GET().MANTICORESEARCH_URL
 	configuration.Servers[0].URL = searchURL
 	apiClient := manticoreclient.NewAPIClient(configuration)
-
 	searchRequest := *manticoreclient.NewSearchRequest(index_selected)
+	// Option 1: Also return RELAVANT words/phrase
+	// query := map[string]interface{}{
+	// 	"match": map[string]interface{}{
+	// 		"*": keyword,
+	// 	},
+	// }
 
+	// Option 2: Onlyreturn matched words/phrase
 	query := map[string]interface{}{
-		"match": map[string]interface{}{
-			"*": keyword,
+		"match_phrase": map[string]interface{}{
+			"*": keyword, // Matches the entire phrase across all fields
 		},
 	}
+
 	searchRequest.SetQuery(query)
 
 	// Set limit to 5 results
