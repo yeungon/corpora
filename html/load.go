@@ -2,7 +2,6 @@ package html
 
 import (
 	"embed"
-	"strings"
 	"text/template"
 )
 
@@ -18,12 +17,6 @@ var (
 
 //go:embed * template/profile/* template/master/* template/corpora/*
 var filesystem embed.FS
-
-var funcs = template.FuncMap{
-	"uppercase": func(v string) string {
-		return strings.ToUpper(v)
-	},
-}
 
 func parse(file string) *template.Template {
 	return template.Must(

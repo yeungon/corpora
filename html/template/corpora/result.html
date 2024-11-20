@@ -1,7 +1,7 @@
 {{define "result"}}
-<div style="overflow-x: auto;" id="concordance" class="concordance mt-3">
-    <p>Search Query: {{ .UserData.Keyword}}</p>
+<div style="overflow-x: auto;" id="concordance" class="concordance mt-3">    
     <p>Language Selected: {{ .UserData.CorpusOptions}}</p>
+    <small><strong>{{ .UserData.Keyword}}</strong> trong <strong>{{.Pagination.time_took}}</strong> ms</small>
 
     {{if .StateSearch}}
     <h2>Search Results {{.TotalMatch}}</h2>
@@ -12,12 +12,12 @@
         </tr>
 
         {{ if eq .SourceIndex "vietnamese_news" }}
-            {{range .Results}}
-            <tr>
-                <td>{{ .Title }}</td>
-                <td>{{ .Content }}</td>
-            </tr>
-            {{end}}       
+        {{range .Results}}
+        <tr>
+            <td>{{ .Title }}</td>
+            <td>{{ .Content }}</td>
+        </tr>
+        {{end}}
         {{end}}
 
         {{ if eq .SourceIndex "english" }}
@@ -30,23 +30,54 @@
         {{end}}
     </table>
     <div>
+        {{.Pagination}}
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=1">First</a></li>
-                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=2">2</a></li>
-                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=3">3</a></li>
-                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=4">4</a></li>
-                <li class="page-item"><a class="page-link" href="{{.CurrentURL}}&page=4">End</a></li>
                 <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                    <a class="page-link" href="{{.CurrentURL}}&page=1">First</a>
+                </li>
+                {{if gt .Page 1}}
+                <li class="page-item">
+                    <a class="page-link" href="{{.CurrentURL}}&page={{sub .Page 1}}">Previous</a>
+                </li>
+                {{end}}
+
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link">{{.Pagination.page}}/{{.Pagination.totalPages}}</a>
+                </li>
+               
+                <!-- Next page link -->
+                {{if lt .Pagination.offset .TotalMatch}}
+                <li class="page-item">
+                    <a class="page-link" href="{{.CurrentURL}}&page={{add .Page 1}}">Next</a>
+                </li>
+                {{end}}
+                <li class="page-item">
+                    <a class="page-link" href="{{.CurrentURL}}&page=4">End</a>
                 </li>
             </ul>
         </nav>
     </div>
-    <h1>SourceIndex: {{.SourceIndex}}</h1>
+
+
+    <!-- Pagination controls -->
+    <div>
+        <p>Current Page: {{.Pagination.page}}</p>
+        <p>Page Size: {{.Pagination.pageSize}}</p>
+        <p>Total Matches: {{.TotalMatch}}</p>
+
+        <!-- Previous page link -->
+        {{if gt .Page 1}}
+        <a href="?page={{sub .Page 1}}">Previous</a>
+        {{end}}
+
+        <!-- Next page link -->
+        {{if lt .Pagination.offset .TotalMatch}}
+        <a href="?page={{add .Page 1}}">Next</a>
+        {{end}}
+    </div>
+
+
     {{else}}
     <p>No results found.</p>
     {{end}}

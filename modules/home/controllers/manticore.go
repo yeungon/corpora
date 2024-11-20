@@ -20,6 +20,7 @@ type SearchData struct {
 var items []html.Item
 var total int32
 var source string
+var pagination map[string]interface{}
 
 func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	// Form Data
@@ -70,7 +71,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	}
 	if index_selected == "my_news" {
 		source = "vietnamese_news"
-		items, total = SearchMyNews(query, index_selected, page)
+		items, total, pagination = SearchMyNews(query, index_selected, page)
 
 	}
 
@@ -90,6 +91,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 		UserData:    SearchDataInstance,
 		CurrentURL:  updatedURL,
 		Page:        page,
+		Pagination:  pagination,
 	}
 
 	// Render the Home page template with the search results
@@ -98,7 +100,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 
 func SearchEnglish(query string, index_selected string) ([]html.Item, int32) {
 	var items []html.Item
-	searchResults, total := models.Manticore(query, index_selected)
+	searchResults, total := models.ManticoreDictionary(query, index_selected)
 	for _, result := range searchResults {
 		items = append(items, html.Item{
 			Word:   result.Word,
@@ -109,16 +111,16 @@ func SearchEnglish(query string, index_selected string) ([]html.Item, int32) {
 
 }
 
-func SearchMyNews(query string, index_selected string, page int) ([]html.Item, int32) {
+func SearchMyNews(query string, index_selected string, page int) ([]html.Item, int32, map[string]interface{}) {
 	var items []html.Item
-	searchResults, total := models.ManticoreMyNews(query, index_selected, page)
+	searchResults, total, pagination := models.ManticoreMyNews(query, index_selected, page)
 	for _, result := range searchResults {
 		items = append(items, html.Item{
 			Title:   result.Title,
 			Content: result.Content,
 		})
 	}
-	return items, total
+	return items, total, pagination
 
 }
 

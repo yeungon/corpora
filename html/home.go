@@ -32,6 +32,7 @@ type IndexParams struct {
 	UserData     interface{}
 	CurrentURL   string
 	Page         int
+	Pagination   map[string]interface{}
 }
 
 func Home(w io.Writer, p IndexParams) error {
