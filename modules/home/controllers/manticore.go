@@ -3,9 +3,11 @@ package home
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/yeungon/corpora/html"
+	"github.com/yeungon/corpora/internal/config"
 	"github.com/yeungon/corpora/modules/home/models"
 )
 
@@ -20,19 +22,31 @@ var total int32
 var source string
 
 func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
+	// Form Data
 	query := r.URL.Query().Get("keyword")
 	selectedOption := r.URL.Query().Get("corpusOptions")
 
+	// URL Data
 	queryParams := r.URL.Query()
 	pageParams := queryParams["page"]
+	baseURL := config.GET().APPURL
+	fullURL := fmt.Sprintf("%s%s", baseURL, r.RequestURI)
 
-	scheme := "http"
-	if r.TLS != nil {
-		scheme = "https"
+	// Parse the URL
+	parsedURL, err := url.Parse(fullURL)
+	if err != nil {
+		fmt.Println("Error parsing URL:", err)
+		return
 	}
-	fullURL := fmt.Sprintf("%s://%s%s", scheme, r.Host, r.RequestURI)
 
-	fmt.Println("r.RequestURI", r.RequestURI)
+	// Get the query parameters
+	queryParamsUpdate := parsedURL.Query()
+	// Remove the "page" parameter
+	queryParamsUpdate.Del("page")
+	// Set the modified query parameters back to the URL
+	parsedURL.RawQuery = queryParamsUpdate.Encode()
+	// Get the updated URL as a string
+	updatedURL := parsedURL.String()
 
 	var page int
 	if len(pageParams) > 0 {
@@ -47,19 +61,13 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 		page = 1
 	}
 
-	fmt.Println("keyword:", queryParams["keyword"])
-	fmt.Println("page:", page)
-	fmt.Println("fullURL:", fullURL)
-
 	//index_selected := "poetic_nom"
 	index_selected := "my_news"
-
 	if index_selected == "my_index" {
 		source = "english"
 		items, total = SearchEnglish(query, index_selected)
 
 	}
-
 	if index_selected == "my_news" {
 		source = "vietnamese_news"
 		items, total = SearchMyNews(query, index_selected, page)
@@ -80,7 +88,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 		Results:     items,
 		TotalMatch:  total,
 		UserData:    SearchDataInstance,
-		CurrentURL:  fullURL,
+		CurrentURL:  updatedURL,
 		Page:        page,
 	}
 

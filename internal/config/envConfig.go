@@ -14,6 +14,8 @@ var (
 )
 
 type ENV struct {
+	APP                 string
+	APPURL              string
 	TEST                string
 	MELISEARCH_URL      string
 	MELISEARCH_API_KEY  string
@@ -27,6 +29,8 @@ func New() *ENV {
 		if err != nil {
 			log.Fatal("Error loading .env file")
 		}
+		app := os.Getenv("APP")
+		app_url := os.Getenv("APPURL")
 		test_env := os.Getenv("TEST")
 		search_url := os.Getenv("MELISEARCH_URL")
 		search_api := os.Getenv("MELISEARCH_API_KEY")
@@ -37,6 +41,8 @@ func New() *ENV {
 			MELISEARCH_URL:      search_url,
 			MELISEARCH_API_KEY:  search_api,
 			MANTICORESEARCH_URL: manticore_url,
+			APPURL:              app_url,
+			APP:                 app,
 		}
 	})
 	return env
