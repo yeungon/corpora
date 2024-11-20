@@ -21,12 +21,19 @@ type Item struct {
 	Word         string `json:"_source.word"`
 }
 
+// Define a struct to hold the parts of the concordance
+type Concordance struct {
+	BeforeKeyword string // Text before the keyword
+	Keyword       string // The keyword itself
+	AfterKeyword  string // Text after the keyword
+}
 type IndexParams struct {
 	Title        string
 	Message      string
 	SourceIndex  string
 	StateSearch  bool
 	Results      []Item
+	Concordances []Concordance
 	CountMatched int
 	TotalMatch   int32
 	UserData     interface{}

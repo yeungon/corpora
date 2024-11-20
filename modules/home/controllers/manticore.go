@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/yeungon/corpora/html"
 	"github.com/yeungon/corpora/internal/config"
@@ -21,6 +23,25 @@ var items []html.Item
 var total int32
 var source string
 var pagination map[string]interface{}
+
+// Function to split the concordance around the keyword
+func splitConcordance(concordance, keyword string) html.Concordance {
+	parts := html.Concordance{}
+
+	// Find the index of the keyword in the concordance text
+	index := strings.Index(concordance, keyword)
+	if index != -1 {
+		parts.BeforeKeyword = concordance[:index]
+		parts.Keyword = keyword
+		parts.AfterKeyword = concordance[index+len(keyword):]
+	} else {
+		parts.BeforeKeyword = concordance
+		parts.Keyword = "" // No keyword found
+		parts.AfterKeyword = ""
+	}
+
+	return parts
+}
 
 func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	// Form Data
@@ -75,6 +96,20 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 
 	}
 
+	keyword := query
+	window := 15
+
+	// Process each result to extract concordances
+	var concordances []html.Concordance
+	for _, result := range items {
+		extractedConcordances := extractConcordance(result.Content, keyword, window)
+		for _, concordance := range extractedConcordances {
+			// Split the concordance around the keyword
+			splitParts := splitConcordance(concordance, keyword)
+			concordances = append(concordances, splitParts)
+		}
+	}
+
 	SearchDataInstance := SearchData{
 		Keyword:       query,
 		CorpusOptions: selectedOption,
@@ -82,16 +117,17 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	}
 	// Prepare the IndexParams for the HTML page
 	p := html.IndexParams{
-		Title:       "Vietnamese Corpora",
-		Message:     query,
-		SourceIndex: source,
-		StateSearch: true,
-		Results:     items,
-		TotalMatch:  total,
-		UserData:    SearchDataInstance,
-		CurrentURL:  updatedURL,
-		Page:        page,
-		Pagination:  pagination,
+		Title:        "Vietnamese Corpora",
+		Message:      query,
+		SourceIndex:  source,
+		StateSearch:  true,
+		Results:      items,
+		Concordances: concordances,
+		TotalMatch:   total,
+		UserData:     SearchDataInstance,
+		CurrentURL:   updatedURL,
+		Page:         page,
+		Pagination:   pagination,
 	}
 
 	// Render the Home page template with the search results
@@ -124,18 +160,63 @@ func SearchMyNews(query string, index_selected string, page int) ([]html.Item, i
 
 }
 
-// type Item struct {
-// 	ID           int `json:"_id"`
-// 	Score        int `json:"_score"`
-// 	Author       string
-// 	Content      string
-// 	CrawledAt    string
-// 	PictureCount int
-// 	Processed    int
-// 	Source       string
-// 	Title        string
-// 	Topic        string
-// 	URL          string
-// 	Define       string `json:"_source.define"`
-// 	Word         string `json:"_source.word"`
-// }
+//	type Item struct {
+//		ID           int `json:"_id"`
+//		Score        int `json:"_score"`
+//		Author       string
+//		Content      string
+//		CrawledAt    string
+//		PictureCount int
+//		Processed    int
+//		Source       string
+//		Title        string
+//		Topic        string
+//		URL          string
+//		Define       string `json:"_source.define"`
+//		Word         string `json:"_source.word"`
+//	}
+//
+// extractConcordance function with case insensitivity but preserving original case in the output
+func extractConcordance(text, phrase string, window int) []string {
+	// Convert the text to lowercase for case-insensitive matching
+	lowerText := strings.ToLower(text)
+	phrase = strings.ToLower(phrase)
+
+	// Tokenize the text into words using a regular expression
+	words := regexp.MustCompile(`\S+`).FindAllString(text, -1)
+	lowerWords := regexp.MustCompile(`\S+`).FindAllString(lowerText, -1)
+
+	phraseWords := strings.Fields(phrase) // Split the phrase into individual words
+	phraseLen := len(phraseWords)
+
+	var concordances []string
+
+	// Loop through the lowercase words to find the phrase match
+	for i := 0; i <= len(lowerWords)-phraseLen; i++ {
+		// Check if the current slice of lowercase words matches the phrase (case-insensitive)
+		if strings.Join(lowerWords[i:i+phraseLen], " ") == phrase {
+			// Calculate start and end indices for the window
+			start := max(0, i-window)
+			end := min(len(words), i+phraseLen+window)
+
+			// Extract the concordance slice based on the original words (preserving the case)
+			concordance := strings.Join(words[start:end], " ")
+			concordances = append(concordances, concordance)
+		}
+	}
+	return concordances
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}

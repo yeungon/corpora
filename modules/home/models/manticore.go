@@ -15,8 +15,9 @@ type ManticoreSearchResult struct {
 }
 
 type ManticoreSearchResultMyNews struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	Title        string   `json:"title"`
+	Content      string   `json:"content"`
+	Concordances []string `json:"concordances"`
 }
 
 func ManticoreDictionary(keyword string, index_selected string) ([]ManticoreSearchResult, int32) {
@@ -36,7 +37,7 @@ func ManticoreDictionary(keyword string, index_selected string) ([]ManticoreSear
 	searchRequest.SetQuery(query)
 
 	// Set limit to 5 results
-	searchRequest.SetLimit(50)
+	//searchRequest.SetLimit(50)
 
 	// Execute the search request
 	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
@@ -59,11 +60,9 @@ func ManticoreDictionary(keyword string, index_selected string) ([]ManticoreSear
 	for _, hit := range resp.Hits.Hits {
 		// Extract the _source field, which is a map
 		source := hit["_source"].(map[string]interface{})
-
 		// Extract 'word' and 'define' from the source map
 		word, wordOk := source["word"].(string)
 		define, defineOk := source["define"].(string)
-
 		// Only append to results if both fields exist and are strings
 		if wordOk && defineOk {
 			results = append(results, ManticoreSearchResult{
@@ -100,19 +99,14 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 		},
 	}
 
-	// options := map[string]interface{}{
-	// 	"group_by": map[string]interface{}{
-	// 		"field": "id",
-	// 		"func":  "attr",
-	// 		"order": "ASC",
-	// 	},
-	// }
-
 	searchRequest.SetQuery(query)
+
+	// highlight := manticoreclient.NewHighlight()
+	// searchRequest.SetHighlight(*highlight)
 	// searchRequest.Options = options
 
 	// Define page and pageSize for pagination
-	pageSize := 3                   // Number of results per page
+	pageSize := 30                  // Number of results per page
 	offset := (page - 1) * pageSize // Calculate offset based on page and pageSize
 
 	// Set limit to 5 results
@@ -138,8 +132,6 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 
 	timeTookToQuery := *resp.Took
 
-	fmt.Println("tookQuery", timeTookToQuery)
-
 	// Iterate through the hits
 
 	for _, hit := range resp.Hits.Hits {
@@ -147,7 +139,6 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 		source := hit["_source"].(map[string]interface{})
 		title, titleOk := source["title"].(string)
 		content, contentOk := source["content"].(string)
-
 		// Only append to results if both fields exist and are strings
 		if titleOk && contentOk {
 			results = append(results, ManticoreSearchResultMyNews{
@@ -170,7 +161,6 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 		offset = (totalPages - 1) * pageSize
 	}
 	// Pagination to pass to HTML template for handling pagination
-	// Pagination data to pass to HTML template
 	pagination := map[string]interface{}{
 		"time_took":    timeTookToQuery,
 		"page":         page,

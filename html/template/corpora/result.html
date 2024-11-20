@@ -1,34 +1,55 @@
 {{define "result"}}
-<div style="overflow-x: auto;" id="concordance" class="concordance mt-3">    
+<div style="overflow-x: auto;" id="concordance" class="concordance mt-3">
     <p>Language Selected: {{ .UserData.CorpusOptions}}</p>
     <small><strong>{{ .UserData.Keyword}}</strong> trong <strong>{{.Pagination.time_took}}</strong> ms</small>
 
     {{if .StateSearch}}
     <h2>Search Results {{.TotalMatch}}</h2>
-    <table border=" 1" cellpadding="10" cellspacing="0" style="width: 100%;">
-        <tr>
-            <th>Word</th>
-            <th>Definition</th>
-        </tr>
 
-        {{ if eq .SourceIndex "vietnamese_news" }}
-        {{range .Results}}
-        <tr>
-            <td>{{ .Title }}</td>
-            <td>{{ .Content }}</td>
-        </tr>
-        {{end}}
-        {{end}}
+    {{ if eq .SourceIndex "vietnamese_news" }}
+    <h1>Concordance Results</h1>
 
-        {{ if eq .SourceIndex "english" }}
-        {{range .Results}}
-        <tr>
-            <td>{{ .Title }}</td>
-            <td>{{ .Content }}</td>
-        </tr>
-        {{end}}
-        {{end}}
+    <table>
+        <thead>
+            <tr>
+                <th>Concordance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Concordances}}
+            <tr>
+                <td>
+                    <!-- Use a table row to display the entire concordance line (before, keyword, after) -->
+                    <table style="width: 100%; border: none; table-layout: fixed;">
+                        <tr>
+                            <!-- The part before the keyword -->
+                            <td style="white-space: pre-wrap; word-wrap: break-word; padding-right: 0;">
+                                {{.BeforeKeyword}}
+                            </td>
+
+                            <!-- The keyword centered in the middle -->
+                            <td style="text-align: center; vertical-align: middle; padding: 0;">
+                                <strong style="background-color: yellow;">{{.Keyword}}</strong>
+                            </td>
+
+                            <!-- The part after the keyword -->
+                            <td style="white-space: pre-wrap; word-wrap: break-word; padding-left: 0;">
+                                {{.AfterKeyword}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td>No concordances found.</td>
+            </tr>
+            {{end}}
+        </tbody>
     </table>
+
+    {{end}}
+
     <div>
         {{.Pagination}}
         <nav aria-label="Page navigation example">
@@ -45,7 +66,7 @@
                 <li class="page-item active" aria-current="page">
                     <a class="page-link">{{.Pagination.page}}/{{.Pagination.totalPages}}</a>
                 </li>
-               
+
                 <!-- Next page link -->
                 {{if lt .Pagination.offset .TotalMatch}}
                 <li class="page-item">
@@ -58,7 +79,6 @@
             </ul>
         </nav>
     </div>
-
 
     <!-- Pagination controls -->
     <div>
@@ -77,9 +97,44 @@
         {{end}}
     </div>
 
-
     {{else}}
     <p>No results found.</p>
     {{end}}
 </div>
+
+<style>
+    table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+    }
+
+    /* The style for individual parts in the concordance */
+    td {
+        padding: 5px;
+    }
+
+    .keyword {
+        font-weight: bold;
+        background-color: yellow;
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Remove padding and margin between the before, keyword, and after parts */
+    .before, .after {
+        padding: 0;
+        margin: 0;
+    }
+</style>
+
 {{end}}
