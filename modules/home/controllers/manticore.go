@@ -24,28 +24,17 @@ var total int32
 var source string
 var pagination map[string]interface{}
 
-// Function to split the concordance around the keyword
-func splitConcordance(concordance, keyword string) html.Concordance {
-	parts := html.Concordance{}
-
-	// Find the index of the keyword in the concordance text
-	index := strings.Index(concordance, keyword)
-	if index != -1 {
-		parts.BeforeKeyword = concordance[:index]
-		parts.Keyword = keyword
-		parts.AfterKeyword = concordance[index+len(keyword):]
-	} else {
-		parts.BeforeKeyword = concordance
-		parts.Keyword = "" // No keyword found
-		parts.AfterKeyword = ""
-	}
-
-	return parts
-}
-
 func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	// Form Data
 	query := r.URL.Query().Get("keyword")
+	query = strings.TrimSpace(query)
+
+	if len(query) <= 0 {
+		var something = "wroigggg"
+		fmt.Printf("Something %s", something)
+
+	}
+
 	selectedOption := r.URL.Query().Get("corpusOptions")
 
 	// URL Data
@@ -97,7 +86,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	}
 
 	keyword := query
-	window := 15
+	window := 10
 
 	// Process each result to extract concordances
 	var concordances []html.Concordance
@@ -219,4 +208,27 @@ func min(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func splitConcordance(concordance, keyword string) html.Concordance {
+	parts := html.Concordance{}
+
+	// Convert the concordance and keyword to lowercase for case-insensitive matching
+	lowerConcordance := strings.ToLower(concordance)
+	lowerKeyword := strings.ToLower(keyword)
+
+	// Find the index of the lowercase keyword in the lowercase concordance
+	index := strings.Index(lowerConcordance, lowerKeyword)
+	if index != -1 {
+		// Map the lowercase match to the original case in the concordance
+		parts.BeforeKeyword = concordance[:index]
+		parts.Keyword = concordance[index : index+len(keyword)]
+		parts.AfterKeyword = concordance[index+len(keyword):]
+	} else {
+		parts.BeforeKeyword = concordance
+		parts.Keyword = "" // No keyword found
+		parts.AfterKeyword = ""
+	}
+
+	return parts
 }

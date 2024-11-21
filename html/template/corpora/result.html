@@ -19,21 +19,16 @@
             {{range .Concordances}}
             <tr>
                 <td>
-                    <!-- Use a table row to display the entire concordance line (before, keyword, after) -->
-                    <table style="width: 100%; border: none; table-layout: fixed;">
+                    <table style="width: 100%; border: none;">
                         <tr>
-                            <!-- The part before the keyword -->
-                            <td style="white-space: pre-wrap; word-wrap: break-word; padding-right: 0;">
+                            <td>
                                 {{.BeforeKeyword}}
                             </td>
 
-                            <!-- The keyword centered in the middle -->
-                            <td style="text-align: center; vertical-align: middle; padding: 0;">
-                                <strong style="background-color: yellow;">{{.Keyword}}</strong>
+                            <td class="keyword__td">
+                                <strong class="keyword">{{.Keyword}}</strong>
                             </td>
-
-                            <!-- The part after the keyword -->
-                            <td style="white-space: pre-wrap; word-wrap: break-word; padding-left: 0;">
+                            <td>
                                 {{.AfterKeyword}}
                             </td>
                         </tr>
@@ -103,14 +98,27 @@
 </div>
 
 <style>
+    .keyword__td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+    }
+
+    .keyword {
+        background-color: #fef08a;
+    }
+
+
     table {
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
+        font-size: 15px;
     }
 
-    th, td {
-        padding: 8px;
+    th,
+    td {
+        /* padding: 8px; */
         text-align: left;
         border: 1px solid #ddd;
         vertical-align: middle;
@@ -118,20 +126,12 @@
 
     /* The style for individual parts in the concordance */
     td {
-        padding: 5px;
+        padding: 1px;
     }
 
-    .keyword {
-        font-weight: bold;
-        background-color: yellow;
-        text-align: center;
-        vertical-align: middle;
-        padding: 0;
-        margin: 0;
-    }
-
-    /* Remove padding and margin between the before, keyword, and after parts */
-    .before, .after {
+      /* Remove padding and margin between the before, keyword, and after parts */
+    .before,
+    .after {
         padding: 0;
         margin: 0;
     }

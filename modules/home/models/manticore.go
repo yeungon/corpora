@@ -4,8 +4,11 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"regexp"
+	"strings"
 
 	manticoreclient "github.com/manticoresoftware/manticoresearch-go"
+	"github.com/yeungon/corpora/html"
 	"github.com/yeungon/corpora/internal/config"
 )
 
@@ -37,7 +40,7 @@ func ManticoreDictionary(keyword string, index_selected string) ([]ManticoreSear
 	searchRequest.SetQuery(query)
 
 	// Set limit to 5 results
-	//searchRequest.SetLimit(50)
+	searchRequest.SetLimit(50)
 
 	// Execute the search request
 	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
@@ -106,7 +109,7 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 	// searchRequest.Options = options
 
 	// Define page and pageSize for pagination
-	pageSize := 30                  // Number of results per page
+	pageSize := 20                  // Number of results per page
 	offset := (page - 1) * pageSize // Calculate offset based on page and pageSize
 
 	// Set limit to 5 results
@@ -174,4 +177,72 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 
 	// Return the results and the total
 	return results, totalMatchedQuery, pagination
+}
+
+// extractConcordance function with case insensitivity but preserving original case in the output
+func extractConcordance(text, phrase string, window int) []string {
+	// Convert the text to lowercase for case-insensitive matching
+	lowerText := strings.ToLower(text)
+	phrase = strings.ToLower(phrase)
+
+	// Tokenize the text into words using a regular expression
+	words := regexp.MustCompile(`\S+`).FindAllString(text, -1)
+	lowerWords := regexp.MustCompile(`\S+`).FindAllString(lowerText, -1)
+
+	phraseWords := strings.Fields(phrase) // Split the phrase into individual words
+	phraseLen := len(phraseWords)
+
+	var concordances []string
+
+	// Loop through the lowercase words to find the phrase match
+	for i := 0; i <= len(lowerWords)-phraseLen; i++ {
+		// Check if the current slice of lowercase words matches the phrase (case-insensitive)
+		if strings.Join(lowerWords[i:i+phraseLen], " ") == phrase {
+			// Calculate start and end indices for the window
+			start := max(0, i-window)
+			end := min(len(words), i+phraseLen+window)
+
+			// Extract the concordance slice based on the original words (preserving the case)
+			concordance := strings.Join(words[start:end], " ")
+			concordances = append(concordances, concordance)
+		}
+	}
+	return concordances
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func splitConcordance(concordance, keyword string) html.Concordance {
+	parts := html.Concordance{}
+
+	// Convert the concordance and keyword to lowercase for case-insensitive matching
+	lowerConcordance := strings.ToLower(concordance)
+	lowerKeyword := strings.ToLower(keyword)
+
+	// Find the index of the lowercase keyword in the lowercase concordance
+	index := strings.Index(lowerConcordance, lowerKeyword)
+	if index != -1 {
+		// Map the lowercase match to the original case in the concordance
+		parts.BeforeKeyword = concordance[:index]
+		parts.Keyword = concordance[index : index+len(keyword)]
+		parts.AfterKeyword = concordance[index+len(keyword):]
+	} else {
+		parts.BeforeKeyword = concordance
+		parts.Keyword = "" // No keyword found
+		parts.AfterKeyword = ""
+	}
+
+	return parts
 }
