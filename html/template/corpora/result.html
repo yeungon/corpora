@@ -1,9 +1,7 @@
 {{define "result"}}
 <div style="overflow-x: auto;" id="concordance" class="concordance mt-3">
     <!-- <p>Language Selected: {{ .UserData.CorpusOptions}}</p> -->
-
-    <small><strong>{{ .UserData.Keyword}}</strong> trong <strong>{{.Pagination.time_took}}</strong> ms</small>
-
+    
     {{if .StateSearch}}
 
     {{ if eq .SourceIndex "vietnamese_news" }}
@@ -12,7 +10,9 @@
         <div class="result_header"></div>
         <div class="result_header"></div>
         <div class="result_header">
-            <small class = "tiny_information">{{.TotalMatch}}</small>
+            <small class = "tiny tiny_word">{{.UserData.Keyword}}</small>
+            <small class = "tiny tiny_total">{{.TotalMatch}}</small>
+            <small class = "tiny tiny_took">{{.Pagination.time_took}} ms</small>
         </div>
         {{range .Concordances}}
         <div class="cell cell-left">{{.BeforeKeyword}}</div>
@@ -80,16 +80,31 @@
         /* border: 1px solid red; */
     }
 
-    .tiny_information{
+    .tiny{
         width: 100%;
-        height: 100%;
-        background-color: coral;
+        height: 100%;        
         padding: 1px;
         padding-left: 2px;
         padding-right: 2px;
+        margin-left: 2px;
+        margin-right: 2px;
         color: white;
         font-size: 14px;
     }
+
+    .tiny_word{
+        background-color: #d050ff
+    }
+
+    .tiny_total{        
+        background-color: #ff7f50
+    }
+
+
+    .tiny_took{
+        background-color: rgb(80, 133, 255);
+    }
+
 
     #result_pagination{
         margin-top: 1rem;

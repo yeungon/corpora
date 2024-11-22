@@ -39,7 +39,7 @@ func ManticoreDictionary(keyword string, index_selected string) ([]ManticoreSear
 
 	searchRequest.SetQuery(query)
 
-	// Set limit to 5 results
+	// Set limit to 50 results
 	searchRequest.SetLimit(50)
 
 	// Execute the search request
@@ -82,7 +82,7 @@ func ManticoreDictionary(keyword string, index_selected string) ([]ManticoreSear
 	return results, total
 }
 
-func ManticoreMyNews(keyword string, index_selected string, page int) ([]ManticoreSearchResultMyNews, int32, map[string]interface{}) {
+func ManticoreMyNews(keyword string, index_selected string, page int) (int32, map[string]interface{}, []html.Concordance) {
 	configuration := manticoreclient.NewConfiguration()
 	searchURL := config.GET().MANTICORESEARCH_URL
 	configuration.Servers[0].URL = searchURL
@@ -104,12 +104,8 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 
 	searchRequest.SetQuery(query)
 
-	// highlight := manticoreclient.NewHighlight()
-	// searchRequest.SetHighlight(*highlight)
-	// searchRequest.Options = options
-
-	// Define page and pageSize for pagination
-	pageSize := 20                  // Number of results per page
+	// Number of article fetched per page (not the actual concordance. For example, one article might have more than 2 concordances.)
+	pageSize := 100
 	offset := (page - 1) * pageSize // Calculate offset based on page and pageSize
 
 	// Set limit to 5 results
@@ -122,7 +118,7 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.Search`: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 		// Return an empty slice and 0 as the total count in case of an error
-		return []ManticoreSearchResultMyNews{}, 0, nil
+		return 0, nil, nil
 	}
 
 	// Create a slice of ManticoreSearchResult from the response
@@ -130,9 +126,6 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 
 	// Total match documents;
 	totalMatchedQuery := *resp.Hits.Total
-
-	fmt.Println("totalMatchedQuery", totalMatchedQuery)
-
 	timeTookToQuery := *resp.Took
 
 	// Iterate through the hits
@@ -153,6 +146,25 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 			fmt.Println("Invalid data: word or define missing")
 		}
 	}
+	// left and right text
+	window := 15
+	// Process each result to extract concordances
+	var concordances []html.Concordance
+	for _, result := range results {
+		extractedConcordances := extractConcordance(result.Content, keyword, window)
+		for _, concordance := range extractedConcordances {
+			// Split the concordance around the keyword
+			splitParts := splitConcordance(concordance, keyword)
+			concordances = append(concordances, splitParts)
+		}
+	}
+
+	total_concordance := len(concordances)
+
+	first50 := getFirstNItems(concordances, 20)
+
+	fmt.Println("tổng số concordance", total_concordance)
+	fmt.Println("tổng số totalMatchedQuery", totalMatchedQuery)
 
 	// Calculate totalPages based on total matches and pageSize
 	totalPages := (int(totalMatchedQuery) + pageSize - 1) / pageSize // Round up the division
@@ -175,21 +187,7 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 		"prevPage":     page - 1,
 	}
 
-	// window := 10
-
-	// // Process each result to extract concordances
-	// var concordances []html.Concordance
-	// for _, result := range results {
-	// 	extractedConcordances := extractConcordance(result.Content, keyword, window)
-	// 	for _, concordance := range extractedConcordances {
-	// 		// Split the concordance around the keyword
-	// 		splitParts := splitConcordance(concordance, keyword)
-	// 		concordances = append(concordances, splitParts)
-	// 	}
-	// }
-
-	// Return the results and the total
-	return results, totalMatchedQuery, pagination
+	return totalMatchedQuery, pagination, first50
 }
 
 // extractConcordance function with case insensitivity but preserving original case in the output
@@ -258,4 +256,11 @@ func splitConcordance(concordance, keyword string) html.Concordance {
 	}
 
 	return parts
+}
+
+func getFirstNItems(slice []html.Concordance, n int) []html.Concordance {
+	if len(slice) > n {
+		return slice[:n]
+	}
+	return slice
 }
