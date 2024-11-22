@@ -86,7 +86,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	}
 
 	keyword := query
-	window := 10
+	window := 20
 
 	// Process each result to extract concordances
 	var concordances []html.Concordance

@@ -175,6 +175,19 @@ func ManticoreMyNews(keyword string, index_selected string, page int) ([]Mantico
 		"prevPage":     page - 1,
 	}
 
+	// window := 10
+
+	// // Process each result to extract concordances
+	// var concordances []html.Concordance
+	// for _, result := range results {
+	// 	extractedConcordances := extractConcordance(result.Content, keyword, window)
+	// 	for _, concordance := range extractedConcordances {
+	// 		// Split the concordance around the keyword
+	// 		splitParts := splitConcordance(concordance, keyword)
+	// 		concordances = append(concordances, splitParts)
+	// 	}
+	// }
+
 	// Return the results and the total
 	return results, totalMatchedQuery, pagination
 }

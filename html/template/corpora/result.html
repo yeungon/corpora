@@ -1,38 +1,29 @@
 {{define "result"}}
 <div style="overflow-x: auto;" id="concordance" class="concordance mt-3">
-    <p>Language Selected: {{ .UserData.CorpusOptions}}</p>
+    <!-- <p>Language Selected: {{ .UserData.CorpusOptions}}</p> -->
+
     <small><strong>{{ .UserData.Keyword}}</strong> trong <strong>{{.Pagination.time_took}}</strong> ms</small>
 
     {{if .StateSearch}}
 
     {{ if eq .SourceIndex "vietnamese_news" }}
 
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {{range .Concordances}}
-            <tr>
-                <td class="left-column">{{.BeforeKeyword}}</td>
-                <td class="middle-column special">{{.Keyword}}</td>
-                <td class="right-column">{{.AfterKeyword}}</td>
-            </tr>
-            {{else}}
-            <tr>
-                <td>No concordances found.</td>
-            </tr>
-            {{end}}
-        </tbody>
-    </table>
+    <div class="grid-table">
+        <div class="result_header"></div>
+        <div class="result_header"></div>
+        <div class="result_header">
+            <small class = "tiny_information">{{.TotalMatch}}</small>
+        </div>
+        {{range .Concordances}}
+        <div class="cell cell-left">{{.BeforeKeyword}}</div>
+        <div class="cell cell-middle">{{.Keyword}}</div>
+        <div class="cell cell-right">{{.AfterKeyword}}</div>
+        {{end}}
+    </div>
 
     {{end}}
 
-    <div>
+    <div id = "result_pagination">
         {{.Pagination}}
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
@@ -85,65 +76,82 @@
 </div>
 
 <style>
-    table {
-        
-        border-collapse: collapse;
-        width: 100%;              
+    #concordance {
+        /* border: 1px solid red; */
     }
 
-    th,
-    td {
-        border: 1px solid #ddd;
-        padding: 2px;
-        vertical-align: top;
-    }
-    td .special { width:200px; } 
-
-    th {
-        background-color: #f4f4f4;
-        text-align: left;
+    .tiny_information{
+        width: 100%;
+        height: 100%;
+        background-color: coral;
+        padding: 1px;
+        padding-left: 2px;
+        padding-right: 2px;
+        color: white;
+        font-size: 14px;
     }
 
-    /* Column Styling */
-    .left-column {
-        text-align: right;
-        /* Align text to the right */
-        padding-right: 1ch;
-        /* Add 1 character space gap to the middle column */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .middle-column {
-        text-align: center;
-        /* Center text in the middle column */
-        white-space: nowrap;
-        /* Prevent wrapping */
-        width: 1px;
-        /* Keep the width minimal, fits the content */
-    }
-
-    .right-column {
-        text-align: left;
-        /* Align text to the left */
-        padding-left: 1ch;
-        /* Add 1 character space gap from the middle column */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 600px) {
-        table {
-            font-size: 14px;
-        }
+    #result_pagination{
+        margin-top: 1rem;
     }
 
     /* update */
 
-    
+    .grid-table {
+        display: grid;
+        grid-template-columns: 1fr minmax(1px, auto) 1fr;
+        /* Fixed middle column, flexible side columns */
+        width: 1000px;
+        /* Fixed width for the table */
+        gap: 1px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 8px;        
+        margin: 0 auto;
+        /* Center the table horizontally */
+    }
+
+    .result_header {
+        font-weight: bold;
+        /* background-color: #007BFF; */        
+        color: rgb(42, 23, 23);     
+        text-align: center;                       
+    }
+
+    .cell {
+        background-color: #f9f9f9;
+        font-size: 16px;
+        /* border: 1px solid #ddd;        
+        border-radius: 4px; */
+        overflow: hidden;
+        /* Prevents content from spilling outside */
+        text-overflow: ellipsis;
+        /* Truncates text if it overflows */
+        white-space: nowrap;
+        /* Ensures single-line text */
+    }
+
+    .cell-left {
+        text-align: right;
+        /* Allows text wrapping for long content, change to white-space: nowrap; if we wanna truncate text */
+        white-space: nowrap;
+        direction: rtl;
+        /* Sets text flow from right-to-left */        
+    }
+
+    .cell-right {
+        text-align: left;
+        /* Allows text wrapping for long content, change to white-space: nowrap; if we wanna truncate text */
+        white-space: nowrap;
+    }
+
+    .cell-middle {
+        white-space: normal;
+        text-align: center;
+        color: #3905b3;
+        padding-left: 1px;      
+        padding-right: 1px;      
+    }
 </style>
 
 {{end}}

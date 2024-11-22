@@ -48,6 +48,4 @@ vanban/*
 
 certificate.pem
 privatekey.pem
-
-.air.toml
 tmp

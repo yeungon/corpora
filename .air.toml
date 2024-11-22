@@ -1,0 +1,31 @@
+# .air.toml
+
+# Root directory of the project
+root = "/home/vuong/WORKSPACE/PROJECTS/GOLANG/corpora"
+
+# Temporary build output directory
+tmp_dir = "tmp"
+bin_name = "main"
+
+# The command to run your Go application
+cmd = "go build -o tmp/main ./cmd/web && tmp/main"
+
+# File watching patterns (watch for changes in specific directories/files)
+[watcher]
+  include = [
+    "**/*.go",      # Watch all Go files
+    "**/*.html",    # Watch HTML files (if you use templates)
+    "**/*.css",     # Watch CSS files
+    "**/*.js",      # Watch JavaScript files
+    "**/*.yaml",    # Watch YAML files (if applicable)
+  ]
+  exclude = [
+    "tmp/**",       # Exclude temporary build files
+    "vendor/**",    # Exclude vendor directory
+  ]
+  delay = 100       # 100ms debounce delay for file changes
+
+# Build configuration
+[build]
+  delay = 500
+  cmd = "go build -o tmp/main ./cmd/web"

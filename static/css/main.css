@@ -14,10 +14,8 @@
   src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665936770/font/SFUFuturaRegular.TTF)
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 * {
-  font-family: var(--font_common)!important;   
+  font-family: var(--font_common);
   font-size: 18px;
   margin: 0;
   padding: 0;
@@ -32,15 +30,15 @@ body {
 :root {
   --font_adelle: adelle;
   --font_sans: Google_Sans;
-  --font_futura: SVN_Futura_Regular;
-  --font_common: "Inter", sans-serif;
+  --font_futura: SVN_Futura_Regular;  
+  --font_common: var(--font_adelle)!important; 
 }
 
 .adelle {
   font-family: adelle;
 }
 
-.futura {
+.font_tiengviet-style {
   font-family: var(--font_futura);
 }
 
