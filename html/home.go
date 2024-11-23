@@ -45,3 +45,7 @@ type IndexParams struct {
 func Home(w io.Writer, p IndexParams) error {
 	return home.ExecuteTemplate(w, "layout.html", p)
 }
+
+func Credit(w io.Writer, p IndexParams) error {
+	return pageCredit.ExecuteTemplate(w, "layout.html", p)
+}

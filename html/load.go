@@ -11,11 +11,12 @@ var (
 	profileShow = parseMultiple("template/profile/show.html")
 	signupUser  = parseMultiple("template/profile/signup.html")
 	profileEdit = parseMultiple("template/profile/edit.html")
+	pageCredit  = parseMultiple("template/pages/credit.html")
 )
 
 // The configuration below is important and REQUIRED, it is a derective.//
 
-//go:embed * template/profile/* template/master/* template/corpora/*
+//go:embed * template/*/*
 var filesystem embed.FS
 
 func parse(file string) *template.Template {

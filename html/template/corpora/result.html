@@ -1,18 +1,16 @@
 {{define "result"}}
 <div style="overflow-x: auto;" id="concordance" class="concordance mt-3">
     <!-- <p>Language Selected: {{ .UserData.CorpusOptions}}</p> -->
-    
     {{if .StateSearch}}
-
     {{ if eq .SourceIndex "vietnamese_news" }}
-
     <div class="grid-table">
-        <div class="result_header"></div>
+        <div class="result_header">
+            <small class="font_tiengviet-style tiny tiny_word">{{.UserData.Keyword}}</small>
+        </div>
         <div class="result_header"></div>
         <div class="result_header">
-            <small class = "font_tiengviet-style tiny tiny_word">{{.UserData.Keyword}}</small>
-            <small class = "font_tiengviet-style tiny tiny_total">{{.TotalMatch}}</small>
-            <small class = "font_tiengviet-style tiny tiny_took">{{.Pagination.time_took}} ms</small>
+            <small class="font_tiengviet-style tiny tiny_total">{{.TotalMatch}}</small>
+            <small class="font_tiengviet-style tiny tiny_took">{{.Pagination.time_took}} ms</small>
         </div>
         {{range .Concordances}}
         <div class="cell cell-left">{{.BeforeKeyword}}</div>
@@ -20,10 +18,9 @@
         <div class="cell cell-right">{{.AfterKeyword}}</div>
         {{end}}
     </div>
-
     {{end}}
 
-    <div id = "result_pagination">
+    <div id="result_pagination">
         {{.Pagination}}
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
@@ -77,12 +74,13 @@
 
 <style>
     #concordance {
-        /* border: 1px solid red; */
+        /* border: 1px solid rgb(234, 231, 231); */
+        padding: 10px;
     }
 
-    .tiny{
+    .tiny {
         width: 100%;
-        height: 100%;        
+        height: 100%;
         padding: 1px;
         padding-left: 2px;
         padding-right: 2px;
@@ -92,21 +90,21 @@
         font-size: 14px;
     }
 
-    .tiny_word{
+    .tiny_word {
         background-color: #d050ff
     }
 
-    .tiny_total{        
+    .tiny_total {
         background-color: #ff7f50
     }
 
 
-    .tiny_took{
+    .tiny_took {
         background-color: rgb(80, 133, 255);
     }
 
 
-    #result_pagination{
+    #result_pagination {
         margin-top: 1rem;
     }
 
@@ -115,21 +113,22 @@
     .grid-table {
         display: grid;
         /* Fixed middle column, flexible side columns */
-        grid-template-columns: 1fr minmax(1px, auto) 1fr;        
+        grid-template-columns: 1fr minmax(1px, auto) 1fr;
         /* width: 1200px; Fixed width for the table */
-        width: 100%; /* Set width to 100% for responsive resizing */        
+        width: 100%;
+        /* Set width to 100% for responsive resizing */
         gap: 1px;
         background-color: #fff;
         padding: 2px;
-        border-radius: 8px;        
-        margin: 0 auto;        
+        border-radius: 8px;
+        margin: 0 auto;
     }
 
     .result_header {
         font-weight: bold;
-        /* background-color: #007BFF; */        
-        color: rgb(42, 23, 23);     
-        text-align: center;                       
+        /* background-color: #007BFF; */
+        color: rgb(42, 23, 23);
+        text-align: center;
     }
 
     .cell {
@@ -150,7 +149,7 @@
         /* Allows text wrapping for long content, change to white-space: nowrap; if we wanna truncate text */
         white-space: nowrap;
         direction: rtl;
-        /* Sets text flow from right-to-left */        
+        /* Sets text flow from right-to-left */
     }
 
     .cell-right {
@@ -163,8 +162,8 @@
         white-space: normal;
         text-align: center;
         color: #3905b3;
-        padding-left: 1px;      
-        padding-right: 1px;      
+        padding-left: 1px;
+        padding-right: 1px;
     }
 </style>
 

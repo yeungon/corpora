@@ -12,6 +12,7 @@ import (
 
 func App() {
 	logs.Log()
+
 	// Might declare more value here in the future work. Use as dependency injection.
 	app := config.NewApp(
 		true, false, "hello world",
