@@ -2,7 +2,17 @@
 <div>
     <form id="corpus_query" action='/query' method='GET'>
         <div class="d-flex justify-content-center align-items-center">
-            <input autoFocus name ="keyword" id="input_search" class="form-control" placeholder="Nhập từ khóa..." type="search"/>
+            <input 
+                autoFocus 
+                name ="keyword" 
+                id="input_search" 
+                class="form-control" 
+                placeholder="Nhập từ khóa..." 
+                type="search"
+                {{if .StateSearch}} 
+                value = "{{.UserData.Keyword}}"
+                {{end}}
+            />
         </div>
         <br>
         <div class="d-flex justify-content-center align-items-center">
@@ -20,10 +30,9 @@
         <br>
         <div class="d-flex justify-content-center align-items-center">
             <button type='submit' class="btn-search">Search</button>
-        </div>
-<!--         
-        {{if .StateSearch}}                       
-        <p style="background-color: #fef08a; border-radius: 5px; height: 50px; min-width: 300px;">Language Selected: {{ .UserData}}</p>
+        </div>                
+        <!-- {{if .StateSearch}}                       
+        <p style="background-color: #fef08a; border-radius: 5px; height: 50px; min-width: 300px;">Language Selected: {{.UserData.Keyword}}</p>
         {{end}} -->
     </form>
 </div>
