@@ -74,13 +74,13 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//index_selected := "poetic_nom"
-	index_selected := "my_news"
-	if index_selected == "my_index" {
+	index_selected := "my_index"
+	if index_selected == "my_news" {
 		source = "english"
 		items, total = SearchEnglish(query, index_selected)
 
 	}
-	if index_selected == "my_news" {
+	if index_selected == "my_index" {
 		source = "vietnamese_news"
 		total, pagination, concordances_model = SearchMyNews(query, index_selected, page)
 

@@ -10,12 +10,12 @@
                 placeholder="Nhập từ khóa..." 
                 type="search"
                 {{if .StateSearch}} 
-                value = "{{.UserData.Keyword}}"
+                    value = "{{.UserData.Keyword}}"
                 {{end}}
-            />
+            />            
         </div>
         <br>
-        <div class="d-flex justify-content-center align-items-center">
+        <!-- <div class="d-flex justify-content-center align-items-center">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="corpusOptions" id="inlineRadio1"
                     value="vietnamese">
@@ -26,10 +26,10 @@
                     value="vietnamese_english">
                 <label class="form-check-label" for="inlineRadio2">Vietnamese-English</label>
             </div>
-        </div>
+        </div> -->
         <br>
         <div class="d-flex justify-content-center align-items-center">
-            <button type='submit' class="btn-search">Search</button>
+            <button id = "search_btm" type='submit' class="btn-search">Search</button>
         </div>                
         <!-- {{if .StateSearch}}                       
         <p style="background-color: #fef08a; border-radius: 5px; height: 50px; min-width: 300px;">Language Selected: {{.UserData.Keyword}}</p>
@@ -44,6 +44,16 @@
         console.log(search_input)
     }
 
+    const search_button = document.querySelector("#search_btm");
+    const result_grid = document.querySelector("#result_grid");
+    
+    search_button.onclick = function(){
+        console.log("click")
+        console.log(result_grid)
+    }
+
+    
+    
 
 </script>
 {{end}}

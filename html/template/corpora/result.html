@@ -1,9 +1,11 @@
 {{define "result"}}
 <div style="overflow-x: auto;" id="concordance" class="concordance mt-3">
-    <!-- <p>Language Selected: {{ .UserData.CorpusOptions}}</p> -->
+    <!-- <p>Language Selected: {{ .UserData.CorpusOptions}}</p> -->     
+     <img src ="/static/images/loading.gif"/>
+
     {{if .StateSearch}}
     {{ if eq .SourceIndex "vietnamese_news" }}
-    <div class="grid-table">
+    <div id = "result_grid" class="grid-table">
         <div class="result_header">
             <small class="font_tiengviet-style tiny tiny_word">{{.UserData.Keyword}}</small>
         </div>
@@ -129,6 +131,7 @@
         /* background-color: #007BFF; */
         color: rgb(42, 23, 23);
         text-align: center;
+        margin-bottom: 15px;
     }
 
     .cell {

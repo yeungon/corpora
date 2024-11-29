@@ -12,74 +12,10 @@ import (
 	"github.com/yeungon/corpora/internal/config"
 )
 
-type ManticoreSearchResult struct {
-	Word   string `json:"word"`
-	Define string `json:"define"`
-}
-
 type ManticoreSearchResultMyNews struct {
-	Title        string   `json:"title"`
-	Content      string   `json:"content"`
+	Text         string   `json:"text"`
+	Domain       string   `json:"domain"`
 	Concordances []string `json:"concordances"`
-}
-
-func ManticoreDictionary(keyword string, index_selected string) ([]ManticoreSearchResult, int32) {
-	configuration := manticoreclient.NewConfiguration()
-	searchURL := config.GET().MANTICORESEARCH_URL
-	configuration.Servers[0].URL = searchURL
-	apiClient := manticoreclient.NewAPIClient(configuration)
-
-	searchRequest := *manticoreclient.NewSearchRequest(index_selected)
-	// Option 2: Onlyreturn matched words/phrase
-	query := map[string]interface{}{
-		"match_phrase": map[string]interface{}{
-			"*": keyword, // Matches the entire phrase across all fields
-		},
-	}
-
-	searchRequest.SetQuery(query)
-
-	// Set limit to 50 results
-	searchRequest.SetLimit(50)
-
-	// Execute the search request
-	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.Search`: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-		// Return an empty slice and 0 as the total count in case of an error
-		return []ManticoreSearchResult{}, 0
-	}
-
-	// Create a slice of ManticoreSearchResult from the response
-	var results []ManticoreSearchResult
-
-	// Get the total hits
-	total := *resp.Hits.Total
-	fmt.Println("Index_lsselected", index_selected)
-	fmt.Println("Total hits:", total)
-
-	// Iterate through the hits
-	for _, hit := range resp.Hits.Hits {
-		// Extract the _source field, which is a map
-		source := hit["_source"].(map[string]interface{})
-		// Extract 'word' and 'define' from the source map
-		word, wordOk := source["word"].(string)
-		define, defineOk := source["define"].(string)
-		// Only append to results if both fields exist and are strings
-		if wordOk && defineOk {
-			results = append(results, ManticoreSearchResult{
-				Word:   word,
-				Define: define,
-			})
-		} else {
-			// Handle the case where either 'word' or 'define' is missing or not a string
-			fmt.Println("Invalid data: word or define missing")
-		}
-	}
-
-	// Return the results and the total
-	return results, total
 }
 
 func ManticoreMyNews(keyword string, index_selected string, page int) (int32, map[string]interface{}, []html.Concordance) {
@@ -88,12 +24,6 @@ func ManticoreMyNews(keyword string, index_selected string, page int) (int32, ma
 	configuration.Servers[0].URL = searchURL
 	apiClient := manticoreclient.NewAPIClient(configuration)
 	searchRequest := *manticoreclient.NewSearchRequest(index_selected)
-	// Option 1: Also return RELAVANT words/phrase
-	// query := map[string]interface{}{
-	// 	"match": map[string]interface{}{
-	// 		"*": keyword,
-	// 	},
-	// }
 
 	// Option 2: Onlyreturn matched words/phrase
 	query := map[string]interface{}{
@@ -105,7 +35,7 @@ func ManticoreMyNews(keyword string, index_selected string, page int) (int32, ma
 	searchRequest.SetQuery(query)
 
 	// Number of article fetched per page (not the actual concordance. For example, one article might have more than 2 concordances.)
-	pageSize := 100
+	pageSize := 15
 	offset := (page - 1) * pageSize // Calculate offset based on page and pageSize
 
 	// Set limit to 5 results
@@ -133,13 +63,13 @@ func ManticoreMyNews(keyword string, index_selected string, page int) (int32, ma
 	for _, hit := range resp.Hits.Hits {
 		// Extract the _source field, which is a map
 		source := hit["_source"].(map[string]interface{})
-		title, titleOk := source["title"].(string)
-		content, contentOk := source["content"].(string)
+		text, text0k := source["text"].(string)
+		domain, domainOk := source["domain"].(string)
 		// Only append to results if both fields exist and are strings
-		if titleOk && contentOk {
+		if text0k && domainOk {
 			results = append(results, ManticoreSearchResultMyNews{
-				Title:   title,
-				Content: content,
+				Text:   text,
+				Domain: domain,
 			})
 		} else {
 			// Handle the case where either 'word' or 'define' is missing or not a string
@@ -147,11 +77,19 @@ func ManticoreMyNews(keyword string, index_selected string, page int) (int32, ma
 		}
 	}
 	// left and right text
-	window := 15
+	window := 10
+
+	fmt.Println(window)
+
+	fmt.Println(results[0].Domain)
+
 	// Process each result to extract concordances
 	var concordances []html.Concordance
+
 	for _, result := range results {
-		extractedConcordances := extractConcordance(result.Content, keyword, window)
+
+		extractedConcordances := extractConcordance(result.Text, keyword, window)
+
 		for _, concordance := range extractedConcordances {
 			// Split the concordance around the keyword
 			splitParts := splitConcordance(concordance, keyword)
