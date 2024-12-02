@@ -29,52 +29,35 @@
             </div>
         {{end}}
 
-        <div id="result_pagination">
+        <div id="result_pagination" class = "mt-4">
             {{.Pagination}}
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="{{.CurrentURL}}&page=1">First</a>
+                        <a class="page-link font_tiengviet-style" href="{{.CurrentURL}}&page=1">First</a>
                     </li>
                     {{if gt .Page 1}}
                     <li class="page-item">
-                        <a class="page-link" href="{{.CurrentURL}}&page={{sub .Page 1}}">Previous</a>
+                        <a class="page-link font_tiengviet-style" href="{{.CurrentURL}}&page={{sub .Page 1}}">Previous</a>
                     </li>
                     {{end}}
 
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link">{{.Pagination.page}}/{{.Pagination.totalPages}}</a>
+                        <a class="page-link font_tiengviet-style">{{.Pagination.page}}/{{.Pagination.totalPages}}</a>
                     </li>
 
                     <!-- Next page link -->
                     {{if lt .Pagination.offset .TotalMatch}}
                     <li class="page-item">
-                        <a class="page-link" href="{{.CurrentURL}}&page={{add .Page 1}}">Next</a>
+                        <a class="page-link font_tiengviet-style" href="{{.CurrentURL}}&page={{add .Page 1}}">Next</a>
                     </li>
                     {{end}}
                     <li class="page-item">
-                        <a class="page-link" href="{{.CurrentURL}}&page=4">End</a>
+                        <a class="page-link font_tiengviet-style" href="{{.CurrentURL}}&page=4">End</a>
                     </li>
                 </ul>
             </nav>
-        </div>
-
-        <!-- Pagination controls -->
-        <div>
-            <p>Current Page: {{.Pagination.page}}</p>
-            <p>Page Size: {{.Pagination.pageSize}}</p>
-            <p>Total Matches: {{.TotalMatch}}</p>
-
-            <!-- Previous page link -->
-            {{if gt .Page 1}}
-            <a href="?page={{sub .Page 1}}">Previous</a>
-            {{end}}
-
-            <!-- Next page link -->
-            {{if lt .Pagination.offset .TotalMatch}}
-            <a href="?page={{add .Page 1}}">Next</a>
-            {{end}}
-        </div>
+        </div>       
     {{else}}
     <p>No results found.</p>
     {{end}}
