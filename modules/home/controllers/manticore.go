@@ -124,31 +124,6 @@ func SearchEnglish(query string, index_selected string) ([]html.Item, int32) {
 }
 
 func SearchMyNews(query string, index_selected string, page int) (int32, map[string]interface{}, []html.Concordance) {
-
 	total, pagination, concordances := models.ManticoreMyNews(query, index_selected, page)
-	// for _, result := range searchResults {
-	// 	items = append(items, html.Item{
-	// 		Title:   result.Title,
-	// 		Content: result.Content,
-	// 	})
-	// }
 	return total, pagination, concordances
-
 }
-
-//	type Item struct {
-//		ID           int `json:"_id"`
-//		Score        int `json:"_score"`
-//		Author       string
-//		Content      string
-//		CrawledAt    string
-//		PictureCount int
-//		Processed    int
-//		Source       string
-//		Title        string
-//		Topic        string
-//		URL          string
-//		Define       string `json:"_source.define"`
-//		Word         string `json:"_source.word"`
-//	}
-//

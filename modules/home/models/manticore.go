@@ -25,7 +25,6 @@ func ManticoreMyNews(keyword string, index_selected string, page int) (int32, ma
 	apiClient := manticoreclient.NewAPIClient(configuration)
 	searchRequest := *manticoreclient.NewSearchRequest(index_selected)
 
-	// Option 2: Onlyreturn matched words/phrase
 	query := map[string]interface{}{
 		"match_phrase": map[string]interface{}{
 			"*": keyword, // Matches the entire phrase across all fields
