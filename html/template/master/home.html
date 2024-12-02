@@ -6,6 +6,9 @@
             <div class="">
                 {{block "search" .}}
                 {{end}}
+                <div id="searching_loading" class="d-flex justify-content-center align-items-center mt-8">
+                    <img src="/static/images/loading.gif" />
+                </div>
                 {{if .StateSearch}}                                
                     {{block "result" .}}                    
                     {{end}}
