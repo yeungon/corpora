@@ -49,3 +49,7 @@ func Home(w io.Writer, p IndexParams) error {
 func Credit(w io.Writer, p IndexParams) error {
 	return pageCredit.ExecuteTemplate(w, "layout.html", p)
 }
+
+func About(w io.Writer, p IndexParams) error {
+	return pageAbout.ExecuteTemplate(w, "layout.html", p)
+}

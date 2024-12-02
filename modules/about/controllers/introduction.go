@@ -1,4 +1,4 @@
-package home
+package about
 
 import (
 	"net/http"
@@ -6,10 +6,10 @@ import (
 	html "github.com/yeungon/corpora/html"
 )
 
-func (app *Controller) Credit(w http.ResponseWriter, r *http.Request) {
+func (app *Controller) Introduction(w http.ResponseWriter, r *http.Request) {
 	p := html.IndexParams{
 		Title:   "Vietnamese Corpora",
 		Message: "This is a new beginning! Hello from Index",
 	}
-	html.Credit(w, p)
+	html.About(w, p)
 }

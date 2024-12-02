@@ -12,6 +12,7 @@ var (
 	signupUser  = parseMultiple("template/profile/signup.html")
 	profileEdit = parseMultiple("template/profile/edit.html")
 	pageCredit  = parseMultiple("template/pages/credit.html")
+	pageAbout   = parseMultiple("template/pages/about.html")
 )
 
 // The configuration below is important and REQUIRED, it is a derective.//
