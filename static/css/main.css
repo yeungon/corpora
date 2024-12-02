@@ -43,7 +43,7 @@ body {
 }
 
 .inform {
-  color: #415262;
+  color: #009688;  
 }
 
 .btn-search {
@@ -74,6 +74,8 @@ body {
   max-width: 575px;
   background-color: #fffcf4;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  margin-top: 2rem;
   /* Adding a soft shadow */
 }
 

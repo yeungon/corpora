@@ -4,74 +4,77 @@
    
     <div id = "searching_loading">
         <img src ="/static/images/loading.gif"/>
-     </div>
-        
-    {{if .StateSearch}}
-    {{ if eq .SourceIndex "vietnamese_news" }}
-    <div id = "result_grid" class="grid-table">
-        <div class="result_header">
-            <small class="font_tiengviet-style tiny tiny_word">{{.UserData.Keyword}}</small>
-        </div>
-        <div class="result_header"></div>
-        <div class="result_header">
-            <small class="font_tiengviet-style tiny tiny_total">{{.TotalMatch}}</small>
-            <small class="font_tiengviet-style tiny tiny_took">{{.Pagination.time_took}} ms</small>
-        </div>
-        {{range .Concordances}}
-        <div class="cell cell-left">{{.BeforeKeyword}}</div>
-        <div class="cell cell-middle">{{.Keyword}}</div>
-        <div class="cell cell-right">{{.AfterKeyword}}</div>
-        {{end}}
     </div>
+     {{if not .StateSearch}}
+    <!-- This block is executed when .StateSearch is false or nil -->
+     <p>hello StateSearch nagative</p>
     {{end}}
-
-    <div id="result_pagination">
-        {{.Pagination}}
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="{{.CurrentURL}}&page=1">First</a>
-                </li>
-                {{if gt .Page 1}}
-                <li class="page-item">
-                    <a class="page-link" href="{{.CurrentURL}}&page={{sub .Page 1}}">Previous</a>
-                </li>
+            
+    {{if .StateSearch}}
+        {{ if eq .SourceIndex "vietnamese_news" }}
+            <div id = "result_grid" class="grid-table">
+                <div class="result_header">
+                    <small class="font_tiengviet-style tiny tiny_word">{{.UserData.Keyword}}</small>
+                </div>
+                <div class="result_header"></div>
+                <div class="result_header">
+                    <small class="font_tiengviet-style tiny tiny_total">{{.TotalMatch}}</small>
+                    <small class="font_tiengviet-style tiny tiny_took">{{.Pagination.time_took}} ms</small>
+                </div>
+                {{range .Concordances}}
+                <div class="cell cell-left">{{.BeforeKeyword}}</div>
+                <div class="cell cell-middle">{{.Keyword}}</div>
+                <div class="cell cell-right">{{.AfterKeyword}}</div>
                 {{end}}
-
-                <li class="page-item active" aria-current="page">
-                    <a class="page-link">{{.Pagination.page}}/{{.Pagination.totalPages}}</a>
-                </li>
-
-                <!-- Next page link -->
-                {{if lt .Pagination.offset .TotalMatch}}
-                <li class="page-item">
-                    <a class="page-link" href="{{.CurrentURL}}&page={{add .Page 1}}">Next</a>
-                </li>
-                {{end}}
-                <li class="page-item">
-                    <a class="page-link" href="{{.CurrentURL}}&page=4">End</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-
-    <!-- Pagination controls -->
-    <div>
-        <p>Current Page: {{.Pagination.page}}</p>
-        <p>Page Size: {{.Pagination.pageSize}}</p>
-        <p>Total Matches: {{.TotalMatch}}</p>
-
-        <!-- Previous page link -->
-        {{if gt .Page 1}}
-        <a href="?page={{sub .Page 1}}">Previous</a>
+            </div>
         {{end}}
 
-        <!-- Next page link -->
-        {{if lt .Pagination.offset .TotalMatch}}
-        <a href="?page={{add .Page 1}}">Next</a>
-        {{end}}
-    </div>
+        <div id="result_pagination">
+            {{.Pagination}}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="{{.CurrentURL}}&page=1">First</a>
+                    </li>
+                    {{if gt .Page 1}}
+                    <li class="page-item">
+                        <a class="page-link" href="{{.CurrentURL}}&page={{sub .Page 1}}">Previous</a>
+                    </li>
+                    {{end}}
 
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link">{{.Pagination.page}}/{{.Pagination.totalPages}}</a>
+                    </li>
+
+                    <!-- Next page link -->
+                    {{if lt .Pagination.offset .TotalMatch}}
+                    <li class="page-item">
+                        <a class="page-link" href="{{.CurrentURL}}&page={{add .Page 1}}">Next</a>
+                    </li>
+                    {{end}}
+                    <li class="page-item">
+                        <a class="page-link" href="{{.CurrentURL}}&page=4">End</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Pagination controls -->
+        <div>
+            <p>Current Page: {{.Pagination.page}}</p>
+            <p>Page Size: {{.Pagination.pageSize}}</p>
+            <p>Total Matches: {{.TotalMatch}}</p>
+
+            <!-- Previous page link -->
+            {{if gt .Page 1}}
+            <a href="?page={{sub .Page 1}}">Previous</a>
+            {{end}}
+
+            <!-- Next page link -->
+            {{if lt .Pagination.offset .TotalMatch}}
+            <a href="?page={{add .Page 1}}">Next</a>
+            {{end}}
+        </div>
     {{else}}
     <p>No results found.</p>
     {{end}}
