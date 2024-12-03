@@ -23,7 +23,7 @@ func ProfileShow(w io.Writer, p ProfileShowParams, partial string) error {
 	if partial == "" {
 		partial = "layout.html"
 	}
-	return profileShow.ExecuteTemplate(w, partial, p)
+	return tokenize.ExecuteTemplate(w, partial, p)
 }
 
 type ProfileEditParams struct {
@@ -31,9 +31,9 @@ type ProfileEditParams struct {
 	Message string
 }
 
-func ProfileEdit(w io.Writer, p ProfileEditParams, partial string) error {
+func PhonemizerHandle(w io.Writer, p ProfileEditParams, partial string) error {
 	if partial == "" {
 		partial = "layout.html"
 	}
-	return profileEdit.ExecuteTemplate(w, partial, p)
+	return phonemizer.ExecuteTemplate(w, partial, p)
 }

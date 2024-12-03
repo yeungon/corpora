@@ -7,12 +7,12 @@ import (
 
 var (
 	//home        = parse("index.html")
-	home        = parseMultiple("template/master/home.html", "template/corpora/search.html", "template/corpora/result.html")
-	profileShow = parseMultiple("template/features/show.html")
-	signupUser  = parseMultiple("template/features/signup.html")
-	profileEdit = parseMultiple("template/features/edit.html")
-	pageCredit  = parseMultiple("template/about/credit.html")
-	pageAbout   = parseMultiple("template/about/about.html")
+	home       = parseMultiple("template/master/home.html", "template/corpora/search.html", "template/corpora/result.html")
+	tokenize   = parseMultiple("template/features/tokenize.html")
+	signupUser = parseMultiple("template/features/signup.html")
+	phonemizer = parseMultiple("template/features/phonemizer.html")
+	pageCredit = parseMultiple("template/about/credit.html")
+	pageAbout  = parseMultiple("template/about/about.html")
 )
 
 // The configuration below is important and REQUIRED, it is a derective.//

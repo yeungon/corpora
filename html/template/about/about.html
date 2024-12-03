@@ -1,33 +1,36 @@
 {{define "content"}}
 <div class="container">
-	<div class = "about-wrap">
-		<p>Dự án ViCorpora tại <a href="https://tiengviet.io.vn">https://tiengviet.io.vn</a> cung cấp khối liệu với dung
-			lượng lớn cùng tính năng KWIC (Keyword in context) </p>
-		<p>ViCorpora là một công cụ mạnh mẽ hỗ trợ nghiên cứu và phân tích ngôn ngữ học. Một trong những tính năng
-			nổi bật của nó là KWIC (Key Word in Context) Concordance. Tính năng này cho phép người dùng tìm kiếm và hiển
-			thị các từ khóa trong ngữ cảnh của chúng, giúp hiểu rõ cách một từ hoặc cụm từ được sử dụng trong các văn
-			bản thực tế.
-		</p>
-
-		<p>KWIC Concordance cung cấp danh sách các câu hoặc đoạn văn có chứa từ khóa, với từ khóa được hiển thị ở vị
-			trí trung tâm và các từ xung quanh được sắp xếp dễ dàng so sánh. Điều này rất hữu ích cho việc:
-		</p>
-		<ul>
-			<li>Phân tích ngữ nghĩa và ngữ dụng của từ.</li>
-			<li>Nghiên cứu tần suất và xu hướng sử dụng.</li>
-			<li>Hỗ trợ dịch thuật và giảng dạy ngôn ngữ.</li>			
-		</ul>
-		<p>Với giao diện thân thiện và khả năng xử lý dữ liệu lớn, ViCorpora là trợ thủ đắc lực cho các nhà nghiên cứu, giáo viên, và sinh viên ngôn ngữ học.</p>
+	<div class="row align-items-center">
+		<div class="col-12 col-sm-2"></div>
+		<div class="col-12 col-sm-8">
+			<div class="about-wrap">
+				<p>Dự án ViCorpora tại <a href="https://tiengviet.io.vn">https://tiengviet.io.vn</a> cung cấp khối liệu
+					tiếng Việt với số lượng token rất lớn của 12 triệu đơn vị văn bản, cùng tính năng KWIC (Keyword in
+					context). Dung lượng tập tin sql chưa nén trước khi index là 93.2 GB. </p>
+				<p>ViCorpora là công cụ mạnh mẽ hỗ trợ nghiên cứu và phân tích ngôn ngữ học. KWIC cho phép người dùng
+					tìm kiếm và hiển thị các từ khóa (ngữ đoạn) trong ngữ cảnh của chúng, giúp hiểu rõ cách một từ hoặc
+					cụm từ được sử dụng trong các văn bản thực tế. Một số ứng dụng thực tế:</p>
+				<ul>
+					<li>Phân tích ngữ nghĩa và ngữ dụng của từ.</li>
+					<li>Nghiên cứu tần suất và xu hướng sử dụng.</li>
+					<li>Hỗ trợ dịch thuật và giảng dạy ngôn ngữ.</li>
+				</ul>
+				<p>Với giao diện thân thiện và khả năng xử lý dữ liệu lớn, ViCorpora là trợ thủ đắc lực cho các nhà
+					nghiên cứu, giáo viên, và sinh viên ngôn ngữ học.</p>
+				<p>ViCorpora sử dụng Manticore để index <a href ="/credit">dữ liệu</a> từ mysql. Backend xử lý truy xuất được viết bằng Golang.</p>
+				<p>Author: Vượng Nguyễn.</p>					
+			</div>
+		</div>
+		<div class="col-12 col-sm-2"></div>
 	</div>
 </div>
-
 <style>
 	/* Remove the undeline of the list */
 	li a {
 		text-decoration: none;
 	}
 
-	.about-wrap{
+	.about-wrap {
 		margin-top: 2rem;
 	}
 </style>

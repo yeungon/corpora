@@ -24,12 +24,12 @@ func (app *Controller) ProfileShow(w http.ResponseWriter, r *http.Request) {
 	html.ProfileShow(w, p, Partial(r))
 }
 
-func (app *Controller) ProfileEdit(w http.ResponseWriter, r *http.Request) {
+func (app *Controller) PhonemizerCtrl(w http.ResponseWriter, r *http.Request) {
 	p := html.ProfileEditParams{
 		Title:   "Profile Edit",
 		Message: "Hello from profile edit",
 	}
-	html.ProfileEdit(w, p, Partial(r))
+	html.PhonemizerHandle(w, p, Partial(r))
 }
 
 func Partial(r *http.Request) string {

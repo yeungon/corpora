@@ -15,8 +15,8 @@ func RouteProvider(r *chi.Mux, appconfig *config.AppConfig) {
 
 	// User router
 	userCtrl := user.New(appconfig)
-	r.Get("/profile", userCtrl.ProfileShow)
-	r.Get("/profile/edit", userCtrl.ProfileEdit)
+	r.Get("/tokenize", userCtrl.ProfileShow)
+	r.Get("/phonemizer", userCtrl.PhonemizerCtrl)
 	r.Get("/signup", userCtrl.Signup)
 
 	// About router
