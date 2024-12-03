@@ -11,6 +11,7 @@ var (
 	tokenize   = parseMultiple("template/features/tokenize.html")
 	signupUser = parseMultiple("template/features/signup.html")
 	phonemizer = parseMultiple("template/features/phonemizer.html")
+	ipa        = parseMultiple("template/features/ipa.html")
 	pageCredit = parseMultiple("template/about/credit.html")
 	pageAbout  = parseMultiple("template/about/about.html")
 )

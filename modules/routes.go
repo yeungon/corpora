@@ -18,6 +18,7 @@ func RouteProvider(r *chi.Mux, appconfig *config.AppConfig) {
 	r.Get("/tokenize", userCtrl.ProfileShow)
 	r.Get("/phonemizer", userCtrl.PhonemizerCtrl)
 	r.Get("/signup", userCtrl.Signup)
+	r.Get("/ipa", userCtrl.IPA)
 
 	// About router
 	aboutCtrl := about.New(appconfig)

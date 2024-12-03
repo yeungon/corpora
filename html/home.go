@@ -53,3 +53,7 @@ func Credit(w io.Writer, p IndexParams) error {
 func About(w io.Writer, p IndexParams) error {
 	return pageAbout.ExecuteTemplate(w, "layout.html", p)
 }
+
+func Ipa(w io.Writer, p IndexParams) error {
+	return ipa.ExecuteTemplate(w, "layout.html", p)
+}
