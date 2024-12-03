@@ -8,11 +8,11 @@ import (
 var (
 	//home        = parse("index.html")
 	home        = parseMultiple("template/master/home.html", "template/corpora/search.html", "template/corpora/result.html")
-	profileShow = parseMultiple("template/profile/show.html")
-	signupUser  = parseMultiple("template/profile/signup.html")
-	profileEdit = parseMultiple("template/profile/edit.html")
-	pageCredit  = parseMultiple("template/pages/credit.html")
-	pageAbout   = parseMultiple("template/pages/about.html")
+	profileShow = parseMultiple("template/features/show.html")
+	signupUser  = parseMultiple("template/features/signup.html")
+	profileEdit = parseMultiple("template/features/edit.html")
+	pageCredit  = parseMultiple("template/about/credit.html")
+	pageAbout   = parseMultiple("template/about/about.html")
 )
 
 // The configuration below is important and REQUIRED, it is a derective.//
