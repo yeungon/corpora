@@ -13,6 +13,11 @@
   src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665936770/font/SFUFuturaRegular.TTF)
 }
 
+@font-face {
+  font-family: phonetics;
+  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665936770/font/SFUFuturaRegular.TTF)
+}
+
 * {
   font-family: var(--font_common);
   font-size: 18px;
@@ -27,6 +32,7 @@ body {
 }
 
 :root {
+  --font-phonetics: phonetics;
   --font_adelle: adelle;
   --font_sans: Google_Sans;
   --font_futura: SVN_Futura_Regular;

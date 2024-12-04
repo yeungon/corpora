@@ -6,15 +6,6 @@ import (
 	html "github.com/yeungon/corpora/html"
 )
 
-func (app *Controller) IPA(w http.ResponseWriter, r *http.Request) {
-	p := html.IndexParams{
-		Title:   "Profile Show",
-		Message: "Hello from profile show",
-	}
-
-	html.Ipa(w, p)
-}
-
 func (app *Controller) Signup(w http.ResponseWriter, r *http.Request) {
 	p := html.SignupUserParams{
 		Title:   "Profile Show",

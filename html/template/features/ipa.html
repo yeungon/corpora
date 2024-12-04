@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12 col-sm-12">
             <div class="d-flex justify-content-center align-items-center">
-                <h4 class = "ipa__header">International Phonetic Alphabet</h4>
+                <h4 class="ipa__header">International Phonetic Alphabet</h4>
             </div>
             <div class="row align-items-center">
                 <div class="table-responsive-sm ">
@@ -34,7 +34,7 @@
                                 <td></td>
                                 <td></td>
                                 <td class="ipa_background vietnamese isVietnamese" data-currentphoneme="61"
-                                    data-vietnamesephoneme="21"> tʰ** </td>
+                                    data-vietnamesephoneme="21"> tʰ</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -164,7 +164,7 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <th scope="row">Affricate*</th>
+                                <th scope="row">Affricate<small style="color: red">*</small></th>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -313,36 +313,154 @@
             </div>
 
             <div class="d-flex container__ipa-result">
-                <div class="common_square-btn flex-center hover-pointer btn_vietnamese" _msttexthash="156741"
-                    _msthash="197"> Vietnamese </div>
-                <div class="reset-btn flex-center hover-pointer" _msttexthash="792519" _msthash="198"> ∅ </div>
-                <div class="common_square-btn flex-center hover-pointer btn_english buttonIsSelected"
-                    _msttexthash="94341" _msthash="199"> English </div>
-
+                <div id="btn_vietnamese" class="common_square-btn flex-center hover-pointer btn_vietnamese"> Vietnamese
+                </div>
+                <div id="btn_reset" class="common_square-btn reset-btn flex-center hover-pointer"> ∅ </div>
+                <div id="btn_english" class="common_square-btn flex-center hover-pointer btn_english buttonIsSelected">
+                    English </div>
                 <div class="check__IPA ipa__result-common disableOnMobile" style="padding-left: 0.5rem;">
                 </div>
+            </div>
+            <div style="margin-top: 2rem">
+                <small> 1): Affricate is not listed in the IPA as it is a combination of two individual
+                    phonemes.</small>
+                <br>
+                <small> 2): /tʰ/ is not listed in the IPA. It can also be written as /t'/.</small>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-
-    .ipa__header{
+    .ipa__header {
         margin-top: 2rem;
         margin-bottom: 1rem;
     }
 
-    .ipa_background{
-        background-color: #fff3cd!important;        
+    .ipa_background {
+        background-color: #fff3cd !important;
         text-align: center;
-        /* font-size: 1.4rem !important;         */
+        font-family: var(--font-phonetics);
+        cursor: pointer;
+        transition: transform .1s;
     }
-   
-    .ipa_center{    
-        display:flex;
+
+    .ipa_background:hover {
+        transform: scale(1.1);
+        background-color: #ff5722 !important;
+        color: white !important;
+    }
+
+    .flex-center {
+        display: flex;
         justify-content: center;
         align-items: center;
     }
+
+    .btn_english,
+    #btn_reset {
+        margin-left: 1.5rem;
+    }
+
+    .common_square-btn {
+        width: 108px;
+        height: 30px;
+        border-radius: 3px;
+        box-shadow: 2px 2px 3px #d77e1f, -2px -2px 3px 0 #e1dcd6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-style: normal;
+        font-size: 1rem;
+        transition: transform .1s;
+    }
+
+    .common_square-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .hover-pointer {
+        cursor: pointer;
+    }
+
+    .highlight_vietnamese {
+        background-color: #858826 !important;
+        color: white !important;
+    }
+
+    .highlight_english {
+        background-color: #ff5722 !important;
+        color: white !important;
+    }
+
+    .selected-vietnamese {
+        background-color: #858826 !important;
+        color: white;
+    }
+
+    .selected-english {
+        background-color: #ff5722 !important;
+        color: white;
+    }
 </style>
+<script>
+
+    const btn_vietnamese = document.querySelector("#btn_vietnamese")
+    const vietnamese_all = Array.from(document.querySelectorAll(".isVietnamese"))
+    const btn_english = document.querySelector("#btn_english")
+    const english_all = Array.from(document.querySelectorAll(".english"))
+
+    document.addEventListener("DOMContentLoaded", function () {
+        tiengvietipa()
+        englishipa()
+        reset()
+    });
+
+    function tiengvietipa() {
+        btn_vietnamese.addEventListener("click", function () {
+            remove()
+            btn_vietnamese.classList.add("selected-vietnamese");
+            btn_english.classList.remove("selected-english");
+            vietnamese_all.forEach((each) => {
+                each.classList.add("highlight_vietnamese");
+            })
+        })
+    }
+
+    function englishipa() {
+        btn_english.addEventListener("click", function () {
+            remove()
+            btn_vietnamese.classList.remove("selected-vietnamese");
+            btn_english.classList.add("selected-english");
+            english_all.forEach((each) => {
+                each.classList.add("highlight_english");
+
+            })
+        })
+    }
+
+    function reset() {
+        btn_reset.addEventListener("click", function () {
+            btn_english.classList.remove("selected-english");
+            btn_vietnamese.classList.remove("selected-vietnamese");
+            vietnamese_all.forEach((each) => {
+                each.classList.remove("highlight_vietnamese")
+            })
+            english_all.forEach((each) => {
+                each.classList.remove("highlight_english")
+            })
+        })
+    }
+
+    function remove() {
+        console.log("Trigger remove?")
+        vietnamese_all.forEach((each) => {
+            each.classList.remove("highlight_vietnamese")
+        })
+        english_all.forEach((each) => {
+            each.classList.remove("highlight_english")
+        })
+    }
+
+</script>
 {{end}}

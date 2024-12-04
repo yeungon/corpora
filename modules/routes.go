@@ -4,6 +4,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/yeungon/corpora/internal/config"
 	about "github.com/yeungon/corpora/modules/about/controllers"
+	features "github.com/yeungon/corpora/modules/features/controllers"
 	home "github.com/yeungon/corpora/modules/home/controllers"
 	user "github.com/yeungon/corpora/modules/user/controllers"
 )
@@ -18,7 +19,10 @@ func RouteProvider(r *chi.Mux, appconfig *config.AppConfig) {
 	r.Get("/tokenize", userCtrl.ProfileShow)
 	r.Get("/phonemizer", userCtrl.PhonemizerCtrl)
 	r.Get("/signup", userCtrl.Signup)
-	r.Get("/ipa", userCtrl.IPA)
+
+	// Features router
+	featuresCtrl := features.New(appconfig)
+	r.Get("/ipa", featuresCtrl.IPA)
 
 	// About router
 	aboutCtrl := about.New(appconfig)
