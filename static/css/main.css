@@ -48,6 +48,12 @@ body {
   font-family: var(--font_futura);
 }
 
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .inform {
   color: var(--color-main);
 }
