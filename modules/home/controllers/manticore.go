@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/yeungon/corpora/html"
+	"github.com/yeungon/corpora/html/view"
 	"github.com/yeungon/corpora/internal/config"
 	"github.com/yeungon/corpora/modules/home/models"
 )
@@ -18,12 +18,12 @@ type SearchData struct {
 	Source        string
 }
 
-var items []html.Item
+var items []view.Item
 var total int32
 var source string
 var pagination map[string]interface{}
-var concordances []html.Concordance
-var concordances_model []html.Concordance
+var concordances []view.Concordance
+var concordances_model []view.Concordance
 
 func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	// Form Data
@@ -92,7 +92,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 		Source:        source,
 	}
 	// Prepare the IndexParams for the HTML page
-	p := html.IndexParams{
+	p := view.IndexParams{
 		Title:        "Vietnamese Corpora",
 		Message:      query,
 		SourceIndex:  source,
@@ -107,14 +107,14 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Render the Home page template with the search results
-	html.Home(w, p)
+	view.Home(w, p)
 }
 
-func SearchEnglish(query string, index_selected string) ([]html.Item, int32) {
-	var items []html.Item
+func SearchEnglish(query string, index_selected string) ([]view.Item, int32) {
+	var items []view.Item
 	searchResults, total := models.ManticoreDictionary(query, index_selected)
 	for _, result := range searchResults {
-		items = append(items, html.Item{
+		items = append(items, view.Item{
 			Word:   result.Word,
 			Define: result.Define,
 		})
@@ -123,7 +123,7 @@ func SearchEnglish(query string, index_selected string) ([]html.Item, int32) {
 
 }
 
-func SearchMyNews(query string, index_selected string, page int) (int32, map[string]interface{}, []html.Concordance) {
+func SearchMyNews(query string, index_selected string, page int) (int32, map[string]interface{}, []view.Concordance) {
 	total, pagination, concordances := models.ManticoreMyNews(query, index_selected, page)
 	return total, pagination, concordances
 }

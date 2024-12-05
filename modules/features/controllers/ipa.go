@@ -3,14 +3,14 @@ package features
 import (
 	"net/http"
 
-	"github.com/yeungon/corpora/html"
+	"github.com/yeungon/corpora/html/view"
 )
 
 func (app *Controller) IPA(w http.ResponseWriter, r *http.Request) {
-	p := html.IPAParams{
+	p := view.IPAParams{
 		Title:   "International Phonetics Alphabet - ngữ âm tiếng Việt",
-		Message: "Hello from profile show",
+		Message: "Hello from IPA",
 	}
 
-	html.Ipa(w, p)
+	view.Ipa(w, p)
 }

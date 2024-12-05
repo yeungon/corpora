@@ -1,6 +1,10 @@
-package html
+package view
 
-import "io"
+import (
+	"io"
+
+	"github.com/yeungon/corpora/html"
+)
 
 type SignupUserParams struct {
 	Title   string
@@ -11,7 +15,7 @@ func SignupUser(w io.Writer, p SignupUserParams, partial string) error {
 	if partial == "" {
 		partial = "layout.html"
 	}
-	return signupUser.ExecuteTemplate(w, partial, p)
+	return html.PageSignupUser.ExecuteTemplate(w, partial, p)
 }
 
 type ProfileShowParams struct {
@@ -23,7 +27,7 @@ func ProfileShow(w io.Writer, p ProfileShowParams, partial string) error {
 	if partial == "" {
 		partial = "layout.html"
 	}
-	return tokenize.ExecuteTemplate(w, partial, p)
+	return html.PageTokenize.ExecuteTemplate(w, partial, p)
 }
 
 type ProfileEditParams struct {
@@ -35,5 +39,5 @@ func PhonemizerHandle(w io.Writer, p ProfileEditParams, partial string) error {
 	if partial == "" {
 		partial = "layout.html"
 	}
-	return phonemizer.ExecuteTemplate(w, partial, p)
+	return html.Pagephonemizer.ExecuteTemplate(w, partial, p)
 }

@@ -1,7 +1,9 @@
-package html
+package view
 
 import (
 	"io"
+
+	"github.com/yeungon/corpora/html"
 )
 
 // Define the structure for a single item
@@ -43,13 +45,9 @@ type IndexParams struct {
 }
 
 func Home(w io.Writer, p IndexParams) error {
-	return home.ExecuteTemplate(w, "layout.html", p)
+	return html.PageHome.ExecuteTemplate(w, "layout.html", p)
 }
 
 func Credit(w io.Writer, p IndexParams) error {
-	return pageCredit.ExecuteTemplate(w, "layout.html", p)
-}
-
-func About(w io.Writer, p IndexParams) error {
-	return pageAbout.ExecuteTemplate(w, "layout.html", p)
+	return html.PageCredit.ExecuteTemplate(w, "layout.html", p)
 }

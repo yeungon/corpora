@@ -3,13 +3,13 @@ package about
 import (
 	"net/http"
 
-	html "github.com/yeungon/corpora/html"
+	"github.com/yeungon/corpora/html/view"
 )
 
 func (app *Controller) Credit(w http.ResponseWriter, r *http.Request) {
-	p := html.IndexParams{
+	p := view.IndexParams{
 		Title:   "Vietnamese Corpora",
 		Message: "This is a new beginning! Hello from Index",
 	}
-	html.Credit(w, p)
+	view.Credit(w, p)
 }

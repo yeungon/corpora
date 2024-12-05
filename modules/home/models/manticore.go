@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	manticoreclient "github.com/manticoresoftware/manticoresearch-go"
-	"github.com/yeungon/corpora/html"
+	"github.com/yeungon/corpora/html/view"
 	"github.com/yeungon/corpora/internal/config"
 )
 
@@ -18,7 +18,7 @@ type ManticoreSearchResultMyNews struct {
 	Concordances []string `json:"concordances"`
 }
 
-func ManticoreMyNews(keyword string, index_selected string, page int) (int32, map[string]interface{}, []html.Concordance) {
+func ManticoreMyNews(keyword string, index_selected string, page int) (int32, map[string]interface{}, []view.Concordance) {
 	configuration := manticoreclient.NewConfiguration()
 	searchURL := config.GET().MANTICORESEARCH_URL
 	configuration.Servers[0].URL = searchURL
@@ -78,7 +78,7 @@ func ManticoreMyNews(keyword string, index_selected string, page int) (int32, ma
 	// left and right text
 	window := 15
 	// Process each result to extract concordances
-	var concordances []html.Concordance
+	var concordances []view.Concordance
 
 	for _, result := range results {
 		extractedConcordances := extractConcordance(result.Text, keyword, window)
@@ -165,8 +165,8 @@ func min(a, b int) int {
 	return b
 }
 
-func splitConcordance(concordance, keyword string) html.Concordance {
-	parts := html.Concordance{}
+func splitConcordance(concordance, keyword string) view.Concordance {
+	parts := view.Concordance{}
 
 	// Convert the concordance and keyword to lowercase for case-insensitive matching
 	lowerConcordance := strings.ToLower(concordance)
@@ -188,7 +188,7 @@ func splitConcordance(concordance, keyword string) html.Concordance {
 	return parts
 }
 
-func getFirstNItems(slice []html.Concordance, n int) []html.Concordance {
+func getFirstNItems(slice []view.Concordance, n int) []view.Concordance {
 	if len(slice) > n {
 		return slice[:n]
 	}

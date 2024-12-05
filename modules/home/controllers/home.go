@@ -3,13 +3,13 @@ package home
 import (
 	"net/http"
 
-	html "github.com/yeungon/corpora/html"
+	"github.com/yeungon/corpora/html/view"
 )
 
 func (app *Controller) Home(w http.ResponseWriter, r *http.Request) {
-	p := html.IndexParams{
+	p := view.IndexParams{
 		Title:   "Vietnamese Corpora",
 		Message: "This is a new beginning! Hello from Index",
 	}
-	html.Home(w, p)
+	view.Home(w, p)
 }

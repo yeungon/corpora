@@ -3,33 +3,33 @@ package user
 import (
 	"net/http"
 
-	html "github.com/yeungon/corpora/html"
+	"github.com/yeungon/corpora/html/view"
 )
 
 func (app *Controller) Signup(w http.ResponseWriter, r *http.Request) {
-	p := html.SignupUserParams{
+	p := view.SignupUserParams{
 		Title:   "Profile Show",
 		Message: "Hello from profile show",
 	}
 
-	html.SignupUser(w, p, Partial(r))
+	view.SignupUser(w, p, Partial(r))
 }
 
 func (app *Controller) ProfileShow(w http.ResponseWriter, r *http.Request) {
-	p := html.ProfileShowParams{
+	p := view.ProfileShowParams{
 		Title:   "Profile Show",
 		Message: "Hello from profile show",
 	}
 
-	html.ProfileShow(w, p, Partial(r))
+	view.ProfileShow(w, p, Partial(r))
 }
 
 func (app *Controller) PhonemizerCtrl(w http.ResponseWriter, r *http.Request) {
-	p := html.ProfileEditParams{
+	p := view.ProfileEditParams{
 		Title:   "Profile Edit",
 		Message: "Hello from profile edit",
 	}
-	html.PhonemizerHandle(w, p, Partial(r))
+	view.PhonemizerHandle(w, p, Partial(r))
 }
 
 func Partial(r *http.Request) string {

@@ -7,13 +7,14 @@ import (
 
 var (
 	//home        = parse("index.html")
-	home       = parseMultiple("template/master/home.html", "template/corpora/search.html", "template/corpora/result.html")
-	tokenize   = parseMultiple("template/features/tokenize.html")
-	signupUser = parseMultiple("template/features/signup.html")
-	phonemizer = parseMultiple("template/features/phonemizer.html")
-	ipaHMTL    = parseMultiple("template/features/ipa.html")
-	pageCredit = parseMultiple("template/about/credit.html")
-	pageAbout  = parseMultiple("template/about/about.html")
+	PageHome       = parseMultiple("template/master/home.html", "template/corpora/search.html", "template/corpora/result.html")
+	PageTokenize   = parseMultiple("template/features/tokenize.html")
+	PageSignupUser = parseMultiple("template/features/signup.html")
+	Pagephonemizer = parseMultiple("template/features/phonemizer.html")
+	PageIPA        = parseMultiple("template/features/ipa.html")
+	PageCredit     = parseMultiple("template/about/credit.html")
+	PageAbout      = parseMultiple("template/about/about.html")
+	PageDonate     = parseMultiple("template/about/donate.html")
 )
 
 // The configuration below is important and REQUIRED, it is a derective.//
