@@ -9,7 +9,7 @@ import (
 
 	"github.com/yeungon/corpora/html/view"
 	"github.com/yeungon/corpora/internal/config"
-	"github.com/yeungon/corpora/modules/home/models"
+	homemodels "github.com/yeungon/corpora/modules/home/models"
 )
 
 type SearchData struct {
@@ -112,7 +112,7 @@ func (app *Controller) SearchManticore(w http.ResponseWriter, r *http.Request) {
 
 func SearchEnglish(query string, index_selected string) ([]view.Item, int32) {
 	var items []view.Item
-	searchResults, total := models.ManticoreDictionary(query, index_selected)
+	searchResults, total := homemodels.ManticoreDictionary(query, index_selected)
 	for _, result := range searchResults {
 		items = append(items, view.Item{
 			Word:   result.Word,
@@ -124,6 +124,6 @@ func SearchEnglish(query string, index_selected string) ([]view.Item, int32) {
 }
 
 func SearchMyNews(query string, index_selected string, page int) (int32, map[string]interface{}, []view.Concordance) {
-	total, pagination, concordances := models.ManticoreMyNews(query, index_selected, page)
+	total, pagination, concordances := homemodels.ManticoreMyNews(query, index_selected, page)
 	return total, pagination, concordances
 }

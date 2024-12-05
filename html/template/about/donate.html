@@ -3,11 +3,11 @@
 	<div class="row align-items-center">
 		<div class="col-12 col-sm-2"></div>
 		<div class="col-12 col-sm-8">
-			<div class="about-wrap">
+			<div class="about-wrap flex-center-column">
                 <h4>Donate</h4>
-				<p>🐬 Dự án ViCorpora tại <a href="https://tiengviet.io.vn">https://tiengviet.io.vn</a> cung cấp khối liệu
-					tiếng Việt với số lượng token rất lớn từ 12 triệu đơn vị văn bản (hơn 12,169,000 rows trong MySQL), cùng tính năng KWIC (Keyword in context). Dung lượng tập tin sql chưa nén trước khi index là 93.2 GB. Dữ liệu được thu thập từ các <a href ="/credit">nguồn</a> mở.</p>							
-				<p>© Vuong Nguyen</p>
+				<p>🐬 Cảm ơn quý bạn đã donate, giúp tôi có thêm sự hỗ trợ để duy trì và phát triển ViCorpus.</p>							
+				<img width = "305" src ="/static/images/mbbank.png"/>
+
 			</div>
 		</div>
 		<div class="col-12 col-sm-2"></div>
@@ -21,6 +21,13 @@
 
 	.about-wrap {
 		margin-top: 2rem;
+	}
+
+	.flex-center-column{
+		display: flex;
+		flex-direction: column;
+  		justify-content: center;
+  		align-items: center;
 	}
 </style>
 {{end}}
