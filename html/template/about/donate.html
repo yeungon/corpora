@@ -4,32 +4,29 @@
 		<div class="col-12 col-sm-2"></div>
 		<div class="col-12 col-sm-8">
 			<div class="about-wrap flex-center-column">
-                <h5>Thông tin donate</h5>				
-				<img width = "305" src ="/static/images/mbbank.png"/>
+				<h5>Thông tin donate</h5>
+				<img width="305" src="/static/images/mbbank.png" />
 				<br>
-				<h1>Donation Records</h1>
-				{{.DonateData}}
+				<h5><strong>Các quý bạn đã donation (cập nhật tự động)</strong></h5>
 				{{if .DonateData}}
 					{{range .DonateData}}
-						<div>
-							<!-- <strong>Amount In:</strong> {{.AmountIn}}<br> -->
-							<strong>Transaction Content:</strong> {{.TransactionContent}}<br>
-							<!-- <strong>Date Created:</strong> {{.Created}}<br> -->
-						</div>
-						<hr>
+					<small>
+						<strong>Amount:</strong> {{.AmountIn}}
+						<strong>Tin nhắn:</strong> {{.TransactionContent}}
+						<strong>Created:</strong> {{.CreatedAt}}
+					</small>
+					<hr>
 					{{end}}
-				{{else}}
-					<p>No donation data available.</p>
-				{{end}}
-				
-				<p>🐬 Cảm ơn quý bạn đã donate, giúp tôi có thêm sự hỗ trợ để duy trì và phát triển ViCorpora.</p>							
+				{{end}}	
+				<p>🐬 Cảm ơn quý bạn đã donate, giúp tôi có thêm sự hỗ trợ để duy trì và phát triển ViCorpora.</p>
 				<small>Vượng Nguyễn</small>
 			</div>
 		</div>
 		<div class="col-12 col-sm-2"></div>
 	</div>
 </div>
-<style>	/* Remove the undeline of the list */
+<style>
+	/* Remove the undeline of the list */
 	li a {
 		text-decoration: none;
 	}
@@ -38,11 +35,11 @@
 		margin-top: 2rem;
 	}
 
-	.flex-center-column{
+	.flex-center-column {
 		display: flex;
 		flex-direction: column;
-  		justify-content: center;
-  		align-items: center;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
 {{end}}
