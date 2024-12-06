@@ -34,6 +34,6 @@ func CreateTable(db *bun.DB) {
 	if err != nil {
 		log.Fatal("Failed to create table:", err)
 	}
-	info := fmt.Sprintf("The table 'users' created. Rows affected: %d", res)
+	info := fmt.Sprintf("The table 'donate' created. Rows affected: %d", res)
 	fmt.Println(info)
 }

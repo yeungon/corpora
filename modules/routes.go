@@ -29,5 +29,5 @@ func RouteProvider(r *chi.Mux, appconfig *config.AppConfig) {
 	r.Get("/about", aboutCtrl.Introduction)
 	r.Get("/credit", aboutCtrl.Credit)
 	r.Get("/donate", aboutCtrl.Donate)
-	r.Get("/webhook", aboutCtrl.ReceiveDonate)
+	r.Post("/webhook", aboutCtrl.ReceiveDonate)
 }
