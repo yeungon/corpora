@@ -45,7 +45,7 @@ corpora.json
 vanban
 vanban/*
 
-
+tiengviet.db
 certificate.pem
 privatekey.pem
 tmp

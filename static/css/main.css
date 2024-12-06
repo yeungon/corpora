@@ -45,7 +45,7 @@ body {
 }
 
 .font_tiengviet-style {
-  font-family: var(--font_futura);
+  font-family: var(--font_sans);
 }
 
 .flex-center {
