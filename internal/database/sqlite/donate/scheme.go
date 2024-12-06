@@ -11,21 +11,23 @@ import (
 
 // WebhookData represents the webhook data with Bun ORM.
 type WebhookData struct {
-	bun.BaseModel      `bun:"table:donate"` // Specifies the table name for the Bun ORM.
-	ID                 int64                `bun:",pk,autoincrement"`                  // Primary key with auto-increment.
-	Gateway            string               `bun:",notnull"`                           // Payment gateway identifier.
-	TransactionDate    time.Time            `bun:",notnull"`                           // Date of the transaction.
-	AccountNumber      string               `bun:",notnull"`                           // Account number involved in the transaction.
-	SubAccount         string               `bun:",nullzero"`                          // Sub-account information, optional.
-	AmountIn           float64              `bun:",notnull,default:0"`                 // Amount received in the transaction.
-	AmountOut          float64              `bun:",notnull,default:0"`                 // Amount sent out in the transaction.
-	Accumulated        float64              `bun:",nullzero,default:0"`                // Accumulated balance after the transaction.
-	Code               string               `bun:",notnull"`                           // Transaction code.
-	TransactionContent string               `bun:",nullzero"`                          // Transaction description or content.
-	ReferenceNumber    string               `bun:",nullzero"`                          // Reference number for the transaction.
-	Body               string               `bun:",nullzero"`                          // Additional details about the transaction.
-	CreatedAt          time.Time            `bun:",notnull,default:current_timestamp"` // Record creation timestamp.
-	UpdatedAt          time.Time            `bun:",notnull,default:current_timestamp"` // Record update timestamp.
+	bun.BaseModel      `bun:"table:donate"`
+	ID                 int64     `bun:",pk,autoincrement"`
+	Gateway            string    `bun:",notnull" json:"gateway"`
+	TransactionDate    string    `bun:",notnull" json:"transactionDate"`
+	AccountNumber      string    `bun:",notnull" json:"accountNumber"`
+	SubAccount         *string   `bun:",nullzero" json:"subAccount"`
+	TransferType       string    `bun:",notnull" json:"transferType"` // Match JSON key
+	TransferAmount     float64   `bun:",notnull" json:"transferAmount"`
+	AmountIn           float64   `bun:",notnull,default:0"`
+	AmountOut          float64   `bun:",notnull,default:0"`
+	Accumulated        float64   `bun:",nullzero,default:0" json:"accumulated"`
+	Code               *string   `bun:",nullzero" json:"code"`
+	TransactionContent string    `bun:",nullzero" json:"content"`
+	ReferenceNumber    string    `bun:",nullzero" json:"referenceCode"`
+	Body               string    `bun:",nullzero" json:"description"`
+	CreatedAt          time.Time `bun:",notnull,default:current_timestamp"`
+	UpdatedAt          time.Time `bun:",notnull,default:current_timestamp"`
 }
 
 func CreateTable(db *bun.DB) {

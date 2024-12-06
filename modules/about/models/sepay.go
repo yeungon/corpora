@@ -1,40 +1,59 @@
 package aboutmodels
 
-// //https://docs.sepay.vn/lap-trinh-webhooks.html
-// // HTTP server for the webhook
-// http.HandleFunc("/webhook", func(w http.ResponseWriter, r *http.Request) {
-// 	var data WebhookData
+import (
+	"context"
+	"encoding/json"
+	"log"
+	"net/http"
 
-// 	// Parse the incoming JSON
-// 	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
-// 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
-// 		return
-// 	}
+	sqlite "github.com/yeungon/corpora/internal/database"
+	"github.com/yeungon/corpora/internal/database/sqlite/donate"
+)
 
-// 	// Determine transaction type and amounts
-// 	if data.Code == "in" {
-// 		data.AmountIn = data.Accumulated
-// 	} else if data.Code == "out" {
-// 		data.AmountOut = data.Accumulated
-// 	}
+func DonateUpdate(w http.ResponseWriter, r *http.Request) {
 
-// 	// Insert the data into the database
-// 	_, err := db.NewInsert().Model(&data).Exec(ctx)
-// 	if err != nil {
-// 		http.Error(w, "Database insertion failed", http.StatusInternalServerError)
-// 		log.Printf("Failed to insert record: %v", err)
-// 		return
-// 	}
+	var data donate.WebhookData
 
-// 	// Send success response
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	json.NewEncoder(w).Encode(map[string]interface{}{
-// 		"success": true,
-// 	})
-// })
+	// Parse the incoming JSON
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
 
-// log.Println("Webhook server is running on port 8080...")
-// if err := http.ListenAndServe(":8080", nil); err != nil {
-// 	log.Fatalf("Failed to start server: %v", err)
-// }
+	// Determine transaction type and amounts
+	if data.TransferType == "in" {
+		data.AmountIn = data.TransferAmount
+	} else if data.TransferType == "out" {
+		data.AmountOut = data.TransferAmount
+	}
+	// Insert the data into the database
+	db := sqlite.DB()
+
+	ctx := context.Background()
+
+	if err := db.PingContext(ctx); err != nil {
+		log.Printf("Database connection failed: %v", err)
+		http.Error(w, "Database connection failed", http.StatusInternalServerError)
+		return
+	}
+
+	_, err := db.NewInsert().Model(&data).Exec(ctx)
+	if err != nil {
+		log.Printf("Failed to insert record: %v", err)
+		log.Printf("Database insertion failed: %v\nData: %+v", err, data)
+		return
+	}
+
+	// Send success response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"success": true,
+	})
+
+	// p := view.AboutParams{
+	// 	Title:   "Vietnamese Corpora",
+	// 	Message: "Update",
+	// }
+	// view.Donate(w, p)
+}

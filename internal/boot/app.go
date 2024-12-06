@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/yeungon/corpora/internal/config"
+	sqlite "github.com/yeungon/corpora/internal/database"
 	"github.com/yeungon/corpora/pkg/logs"
 )
 
@@ -31,6 +32,14 @@ func App() {
 	r.Use(securityHeaders)
 	r.Use(middleware.Timeout(60 * time.Second))
 	Register(r, app)
+
+	// =============sqlite=============
+	sqlite.BunConnect()
+	db := sqlite.DB()
+	defer db.Close()
+	// Enable debugging for queries
+	// =============sqlite=============
+
 	http.ListenAndServe(":9999", r)
 	defer logs.CloseLog()
 }
