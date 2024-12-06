@@ -9,8 +9,8 @@ import (
 	"github.com/uptrace/bun"
 )
 
-// WebhookData represents the webhook data with Bun ORM.
-type WebhookData struct {
+// DonateData represents the webhook data with Bun ORM.
+type DonateData struct {
 	bun.BaseModel      `bun:"table:donate"`
 	ID                 int64     `bun:",pk,autoincrement"`
 	Gateway            string    `bun:",notnull" json:"gateway"`
@@ -32,7 +32,7 @@ type WebhookData struct {
 
 func CreateTable(db *bun.DB) {
 	var ctx = context.Background()
-	res, err := db.NewCreateTable().Model((*WebhookData)(nil)).IfNotExists().Exec(ctx)
+	res, err := db.NewCreateTable().Model((*DonateData)(nil)).IfNotExists().Exec(ctx)
 	if err != nil {
 		log.Fatal("Failed to create table:", err)
 	}

@@ -7,6 +7,21 @@
                 <h5>Thông tin donate</h5>				
 				<img width = "305" src ="/static/images/mbbank.png"/>
 				<br>
+				<h1>Donation Records</h1>
+				{{.DonateData}}
+				{{if .DonateData}}
+					{{range .DonateData}}
+						<div>
+							<!-- <strong>Amount In:</strong> {{.AmountIn}}<br> -->
+							<strong>Transaction Content:</strong> {{.TransactionContent}}<br>
+							<!-- <strong>Date Created:</strong> {{.Created}}<br> -->
+						</div>
+						<hr>
+					{{end}}
+				{{else}}
+					<p>No donation data available.</p>
+				{{end}}
+				
 				<p>🐬 Cảm ơn quý bạn đã donate, giúp tôi có thêm sự hỗ trợ để duy trì và phát triển ViCorpora.</p>							
 				<small>Vượng Nguyễn</small>
 			</div>

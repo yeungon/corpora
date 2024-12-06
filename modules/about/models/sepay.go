@@ -11,8 +11,7 @@ import (
 )
 
 func DonateUpdate(w http.ResponseWriter, r *http.Request) {
-
-	var data donate.WebhookData
+	var data donate.DonateData
 
 	// Parse the incoming JSON
 	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
