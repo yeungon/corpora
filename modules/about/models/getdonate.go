@@ -12,11 +12,10 @@ import (
 func GetAllDonation(db *bun.DB) []donate.DonateData {
 	var ctx = context.Background()
 	var donateList []donate.DonateData
-
 	// Debugging: Log query execution
 	err := db.NewSelect().
 		Model(&donateList).
-		Order("id ASC").
+		Order("id DESC").
 		Scan(ctx)
 	if err != nil {
 		if err == sql.ErrNoRows {

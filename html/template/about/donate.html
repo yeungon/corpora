@@ -3,22 +3,23 @@
 	<div class="row align-items-center">
 		<div class="col-12 col-sm-2"></div>
 		<div class="col-12 col-sm-8">
-			<div class="about-wrap flex-center-column">
-				<h5>Thông tin donate</h5>
-				<img width="305" src="/static/images/mbbank.png" />
+			<div class="about-wrap flex-center-column">				
+				<img width="400" src="/static/images/mbbank.png" />
 				<br>
-				<h5><strong>Các quý bạn đã donation (cập nhật tự động)</strong></h5>
-				{{if .DonateData}}
-					{{range .DonateData}}
-					<small>
-						<strong>Amount:</strong> {{.AmountIn}}
-						<strong>Tin nhắn:</strong> {{.TransactionContent}}
-						<strong>Created:</strong> {{.CreatedAt}}
-					</small>
-					<hr>
-					{{end}}
-				{{end}}	
-				<p>🐬 Cảm ơn quý bạn đã donate, giúp tôi có thêm sự hỗ trợ để duy trì và phát triển ViCorpora.</p>
+				<h5><strong>Danh sách donation <span style = "font-weight: 500;">(cập nhật tự động)</span></strong></h5>
+				<div>
+					{{if .DonateData}}
+						{{range .DonateData}}
+						<small>
+							<span class = "text-tiny"><strong style = "font-size: 13px">Amount:</strong> {{.AmountIn}}</span>
+							<span class = "text-tiny"><strong style = "font-size: 13px">Message:</strong> {{.TransactionContent}}</span>							
+							<span class = "text-tiny"><strong style = "font-size: 13px">Time:</strong> {{.CreatedAt}}</span>
+						</small>
+						<br>						
+						{{end}}
+					{{end}}	
+				</div>
+				<p class = "mt-2">🐬 Cảm ơn quý bạn đã donate, giúp tôi có thêm sự hỗ trợ để duy trì và phát triển ViCorpora.</p>
 				<small>Vượng Nguyễn</small>
 			</div>
 		</div>
@@ -34,7 +35,9 @@
 	.about-wrap {
 		margin-top: 2rem;
 	}
-
+	.text-tiny{
+		font-size: 13px;		
+	}
 	.flex-center-column {
 		display: flex;
 		flex-direction: column;
