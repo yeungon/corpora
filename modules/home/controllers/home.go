@@ -8,7 +8,7 @@ import (
 
 func (app *Controller) Home(w http.ResponseWriter, r *http.Request) {
 	p := view.IndexParams{
-		Title:   "Vietnamese Corpora",
+		Title:   "ViCorpora - large Vietnamese corpora",
 		Message: "This is a new beginning! Hello from Index",
 	}
 	view.Home(w, p)

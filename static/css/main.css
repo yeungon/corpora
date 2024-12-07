@@ -1,22 +1,13 @@
 @font-face {
-  font-family: Google_Sans;
-  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665459305/font/Vietnamese_Good_GoogleSans-Regular.ttf);
-
-}
-@font-face {
   font-family: adelle;
   src: url(https://res.cloudinary.com/yeungon/raw/upload/v1662636833/font/vietnamese_adelleSansEXT-Regular.otf);
 }
 
 @font-face {
-  font-family: SVN_Futura_Regular;
-  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665936770/font/SFUFuturaRegular.TTF)
+  font-family: lato_vietnamese;
+  src: url(/static/fonts/Vietnamese_Lato_Regular.ttf)
 }
 
-@font-face {
-  font-family: phonetics;
-  src: url(https://res.cloudinary.com/yeungon/raw/upload/v1665936770/font/SFUFuturaRegular.TTF)
-}
 
 * {
   font-family: var(--font_common);
@@ -31,21 +22,15 @@ body {
   scroll-behavior: smooth;
 }
 
-:root {
-  --font-phonetics: phonetics;
+:root {  
   --font_adelle: adelle;
-  --font_sans: Google_Sans;
-  --font_futura: SVN_Futura_Regular;
+  --font_lato: lato_vietnamese;  
   --font_common: var(--font_adelle) !important;
   --color-main: #ff5722;
 }
 
-.adelle {
-  font-family: adelle;
-}
-
 .font_tiengviet-style {
-  font-family: var(--font_sans);
+  font-family: var(--font_adelle);
 }
 
 .flex-center {
