@@ -10,13 +10,14 @@
                     hx-on:htmx:error="alert('An error occurred!')"
                     hx-indicator="#loading"
                     >
-                    <textarea id = "textarea" type="text" name="textarea" cols = "80" rows ="6" placeholder="Nhập tiếng Anh hoặc tiếng Việt..."></textarea>
+                    <textarea id="textarea" name="textarea" class="form-control w-100" rows="6" placeholder="Nhập tiếng Anh hoặc tiếng Việt..."></textarea>
+
                     <div id="loading" style="display: none;">Đang xử lý...</div>
                     <br>
                     <button class = "phonetics_btn" value="vietnamese" name ="language" type="submit">Vietnamese</button>
                     <button class = "phonetics_btn" value="english"name ="language" type="submit">English</button>
                 </form>
-                <p>Nhập văn bản tiếng Việt hoặc Anh để chuyển đổi sang âm vị.</p>
+                <small>Nhập văn bản tiếng Việt hoặc Anh để chuyển đổi sang âm vị.</small>
                 <div id="response"></div>
             </div>
         </div>

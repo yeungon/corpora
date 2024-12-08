@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/yeungon/corpora/html/view"
+	featuresmodels "github.com/yeungon/corpora/modules/features/models"
 )
 
 func (app *Controller) PhonemizerCtrl(w http.ResponseWriter, r *http.Request) {
@@ -37,16 +38,32 @@ func (app *Controller) PhonemizerPostCtrl(w http.ResponseWriter, r *http.Request
 			fmt.Fprintf(w, "%s", message)
 			return
 		}
-
 		if language == "vietnamese" {
 			fmt.Fprintf(w, "Processing Vietnamese: %s", textLower)
 		} else if language == "english" {
-			fmt.Fprintf(w, "Processing English: %s", textLower)
+			pronunciations, err := featuresmodels.EnglishWord(textLower)
+
+			if err != nil {
+				fmt.Println("Error:", err)
+				return
+			}
+
+			// Build a single string of pronunciations
+			var pronunciationString strings.Builder
+			for _, pronunciation := range pronunciations {
+				if pronunciation != "Not found" {
+					pronunciationString.WriteString(pronunciation + " ")
+				}
+			}
+
+			// Print the final string
+			fmt.Println("Pronunciation String:")
+			ipaenglish := pronunciationString.String()
+
+			fmt.Fprintf(w, "Processing English: %s", ipaenglish)
 		} else {
 			http.Error(w, "Invalid language selection", http.StatusBadRequest)
 		}
-
 		fmt.Fprintf(w, "%s", "Tính năng này đang được xây dựng!")
-		//fmt.Fprintf(w, "%s!", text)
 	}
 }
