@@ -327,6 +327,9 @@
                 <br>
                 <small> 2): /tʰ/ is not listed in the IPA. It can also be written as /t'/.</small>
             </div>
+            <div id = "tiengviet_analysis" style="margin-top: 2rem">
+                
+            </div>
         </div>
     </div>
 </div>
@@ -403,6 +406,8 @@
     const vietnamese_all = Array.from(document.querySelectorAll(".isVietnamese"))
     const btn_english = document.querySelector("#btn_english")
     const english_all = Array.from(document.querySelectorAll(".english"))
+    const ipa_background = Array.from(document.querySelectorAll(".ipa_background"));
+    const tiengviet_analysis = document.querySelector("#tiengviet_analysis")
 
     document.addEventListener("DOMContentLoaded", function () {
         tiengvietipa()
@@ -455,6 +460,15 @@
             each.classList.remove("highlight_english")
         })
     }
+
+    ipa_background.forEach(each => {        
+        each.addEventListener("click", function(current){            
+            let innerHTML = each.innerHTML;
+            console.log(each)
+            console.log(innerHTML); // Outputs: "n"
+            tiengviet_analysis.innerHTML = innerHTML
+        })
+    })
 
 </script>
 {{end}}

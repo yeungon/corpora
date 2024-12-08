@@ -17,13 +17,14 @@ func RouteProvider(r *chi.Mux, appconfig *config.AppConfig) {
 	// User router
 	userCtrl := user.New(appconfig)
 	r.Get("/tokenize", userCtrl.ProfileShow)
-	r.Get("/phonemizer", userCtrl.PhonemizerCtrl)
 	r.Get("/signup", userCtrl.Signup)
 
 	// Features router
 	featuresCtrl := features.New(appconfig)
 	r.Get("/ipa", featuresCtrl.IPA)
-
+	r.Get("/test", featuresCtrl.VietnameseIPA)
+	r.Get("/phonemizer", featuresCtrl.PhonemizerCtrl)
+	r.Post("/phonemizer", featuresCtrl.PhonemizerPostCtrl)
 	// About router
 	aboutCtrl := about.New(appconfig)
 	r.Get("/about", aboutCtrl.Introduction)

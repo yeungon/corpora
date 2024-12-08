@@ -4,7 +4,20 @@
         <div class="col-12 col-sm-2"></div>
         <div class="col-12 col-sm-8">
             <div class="row align-items-center mt-6">      
-                <p>Tính năng đang phonemizer được viết.</p>                
+
+                 <h6 class = "mb-4"><strong>Convert sang phonetics</strong></h6>
+                <form hx-post="/phonemizer" hx-target="#response"
+                    hx-on:htmx:error="alert('An error occurred!')"
+                    hx-indicator="#loading"
+                    >
+                    <textarea id = "textarea" type="text" name="textarea" cols = "80" rows ="6" placeholder="Nhập tiếng Anh hoặc tiếng Việt..."></textarea>
+                    <div id="loading" style="display: none;">Đang xử lý...</div>
+                    <br>
+                    <button class = "phonetics_btn" value="vietnamese" name ="language" type="submit">Vietnamese</button>
+                    <button class = "phonetics_btn" value="english"name ="language" type="submit">English</button>
+                </form>
+                <p>Nhập văn bản tiếng Việt hoặc Anh để chuyển đổi sang âm vị.</p>
+                <div id="response"></div>
             </div>
         </div>
         <div class="col-12 col-sm-2"></div>  
@@ -12,5 +25,13 @@
 </div>
 
 <style>
+    #textarea{
+        padding: 5px;
+    }
+    .phonetics_btn{
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        padding: 0 4px;
+    }
 </style>
 {{end}}

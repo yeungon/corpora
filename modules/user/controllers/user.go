@@ -24,14 +24,6 @@ func (app *Controller) ProfileShow(w http.ResponseWriter, r *http.Request) {
 	view.ProfileShow(w, p, Partial(r))
 }
 
-func (app *Controller) PhonemizerCtrl(w http.ResponseWriter, r *http.Request) {
-	p := view.ProfileEditParams{
-		Title:   "Profile Edit",
-		Message: "Hello from profile edit",
-	}
-	view.PhonemizerHandle(w, p, Partial(r))
-}
-
 func Partial(r *http.Request) string {
 	return r.URL.Query().Get("partial")
 }
