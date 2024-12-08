@@ -42,25 +42,11 @@ func (app *Controller) PhonemizerPostCtrl(w http.ResponseWriter, r *http.Request
 			fmt.Fprintf(w, "Processing Vietnamese: %s", textLower)
 		} else if language == "english" {
 			pronunciations, err := featuresmodels.EnglishWord(textLower)
-
 			if err != nil {
 				fmt.Println("Error:", err)
 				return
 			}
-
-			// Build a single string of pronunciations
-			var pronunciationString strings.Builder
-			for _, pronunciation := range pronunciations {
-				if pronunciation != "Not found" {
-					pronunciationString.WriteString(pronunciation + " ")
-				}
-			}
-
-			// Print the final string
-			fmt.Println("Pronunciation String:")
-			ipaenglish := pronunciationString.String()
-
-			fmt.Fprintf(w, "Processing English: %s", ipaenglish)
+			fmt.Fprintf(w, "Processing English: %s", pronunciations)
 		} else {
 			http.Error(w, "Invalid language selection", http.StatusBadRequest)
 		}
