@@ -39,17 +39,17 @@ func (app *Controller) PhonemizerPostCtrl(w http.ResponseWriter, r *http.Request
 			return
 		}
 		if language == "vietnamese" {
-			fmt.Fprintf(w, "Processing Vietnamese: %s", textLower)
+			fmt.Fprintf(w, "%s", textLower)
 		} else if language == "english" {
 			pronunciations, err := featuresmodels.EnglishWord(textLower)
 			if err != nil {
 				fmt.Println("Error:", err)
 				return
 			}
-			fmt.Fprintf(w, "Processing English: %s", pronunciations)
+			fmt.Fprintf(w, "%s", pronunciations)
 		} else {
 			http.Error(w, "Invalid language selection", http.StatusBadRequest)
 		}
-		fmt.Fprintf(w, "%s", "Tính năng này đang được xây dựng!")
+		//fmt.Fprintf(w, "%s", "Tính năng này đang được xây dựng!")
 	}
 }

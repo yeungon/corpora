@@ -22,7 +22,6 @@ func RouteProvider(r *chi.Mux, appconfig *config.AppConfig) {
 	// Features router ================
 	featuresCtrl := features.New(appconfig)
 	r.Get("/ipa", featuresCtrl.IPA)
-	r.Get("/test", featuresCtrl.EnglishIPA)
 	r.Get("/phonemizer", featuresCtrl.PhonemizerCtrl)
 	r.Post("/phonemizer", featuresCtrl.PhonemizerPostCtrl)
 

@@ -3,9 +3,8 @@
     <div class="row">
         <div class="col-12 col-sm-2"></div>
         <div class="col-12 col-sm-8">
-            <div class="row align-items-center mt-6">
-
-                <h6 class="mb-4"><strong>Convert sang phonetics</strong></h6>
+            <div class="row align-items-center mt-6">                
+                <small id = "phonemizer_heading">Chuyển đổi tiếng Việt hoặc Anh sang phonetics - âm vị.</small>
                 <form hx-post="/phonemizer" hx-target="#response" hx-on:htmx:error="alert('An error occurred!')"
                     hx-indicator="#loading">
                     <textarea id="textarea" name="textarea" class="form-control w-100" rows="6"
@@ -13,10 +12,9 @@
 
                     <div id="loading" style="display: none;">Đang xử lý...</div>
                     <br>
-                    <button class="phonetics_btn" value="vietnamese" name="language" type="submit">Vietnamese</button>
-                    <button class="phonetics_btn" value="english" name="language" type="submit">English</button>
-                </form>
-                <small>Nhập văn bản tiếng Việt hoặc Anh để chuyển đổi sang âm vị.</small>
+                    <button class="phonetics_btn btn btn-outline-primary" value="vietnamese" name="language" type="submit">Vietnamese</button>
+                    <button class="phonetics_btn btn btn-outline-success" value="english" name="language" type="submit">English</button>
+                </form>                
                 <div id="response"></div>
             </div>
         </div>
@@ -25,16 +23,25 @@
 </div>
 
 <style>
+    #phonemizer_heading{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
     #textarea {
-        padding: 5px;
+        padding: 7px;
+        border-radius: 2px;
     }
 
     .phonetics_btn {
-        margin-top: 2rem;
+        margin-top: 1.5rem;
+        padding-top:3px!important;
+        padding-bottom:3px!important;
+        border-radius: 2px;
         margin-bottom: 2rem;
-        margin-left: 6px;
-        padding: 0 6px;
+        margin-left: 6px;        
         transition: transform 0.3s ease;
+        width: 150px;
     }
 
     .phonetics_btn:hover {
